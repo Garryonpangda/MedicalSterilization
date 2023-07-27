@@ -45,6 +45,7 @@ export default {
       .el-card {
         width: 98%;
         height: 97%;
+        background-color: rgba(51, 51, 51, 1);
       }
     }
   }
