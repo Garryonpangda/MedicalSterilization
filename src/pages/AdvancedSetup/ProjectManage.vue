@@ -1,5 +1,95 @@
 <template>
   <div class="notification-page">
+    <el-dialog title="添加项目" :visible.sync="firstpage" width="30%" :before-close="handleClose">
+      <div>
+        <div>
+          <el-form :model="addForm" label-width="70px" hide-required-asterisk="true">
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="项目ID" required="true">
+                  <el-input v-model="projectForm.projectid" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="项目名称">
+                  <el-input v-model="projectForm.projectname" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="说明">
+                  <el-input v-model="projectForm.description" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="firstpage = false">取消</el-button>
+          <el-button type="primary" @click="next">下一步</el-button>
+        </span>
+      </div>
+
+    </el-dialog>
+
+    <el-dialog title="创建初始账户" :visible.sync="secondpage" width="30%" :before-close="handleClose">
+      <div>
+        <div>
+          <el-form :model="addForm" label-width="70px" hide-required-asterisk="true">
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="账户名" required="true">
+                  <el-input v-model="acForm.username" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="密码" required="true">
+                  <el-input v-model="acForm.pwd" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="姓名" required="true">
+                  <el-input v-model="acForm.name" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="手机号" required="true">
+                  <el-input v-model="acForm.phone" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="邮箱地址" required="true">
+                  <el-input v-model="acForm.email" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="secondpage = false">取消</el-button>
+          <el-button type="primary" @click="retreat">上一步</el-button>
+          <el-button type="primary" @click="finish">完成</el-button>
+        </span>
+      </div>
+
+    </el-dialog>
     <div class="bigtitle">
       <p>项目</p>
       <p class="secondtext">项目管理</p>
@@ -9,7 +99,7 @@
       <!-- 搜索条件 -->
       <div class="search-box">
         <el-form :model="searchForm" label-width="100px">
-        
+
           <el-row :gutter="10">
             <el-col :span="12">
               <el-form-item>
@@ -22,65 +112,31 @@
 
       <!-- 列表 -->
       <div class="notification-list">
-        <el-table
-          :data="notificationList"
-          height="300"
-          width="100%"
-          :header-cell-style="{
-            background: '#027DB4',
-            color: 'white',
-          }"
-        >
+        <el-table :data="notificationList" height="300" width="100%" :header-cell-style="{
+          background: '#027DB4',
+          color: 'white',
+        }">
           <el-table-column type="selection" width="65"></el-table-column>
 
-          <el-table-column
-            prop="projectID"
-            label="项目ID"
-            width="200"
-          ></el-table-column>
-          <el-table-column
-            prop="projectName"
-            label="项目名称"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="explain"
-            label="说明"
-            width="250"
-          ></el-table-column>
-            <el-table-column
-            prop="createTime"
-            label="创建时间"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="updateTime"
-            label="更新时间"
-            width="283"
-          ></el-table-column>
-      
+          <el-table-column prop="projectID" label="项目ID" width="200"></el-table-column>
+          <el-table-column prop="projectName" label="项目名称" width="150"></el-table-column>
+          <el-table-column prop="explain" label="说明" width="250"></el-table-column>
+          <el-table-column prop="createTime" label="创建时间" width="150"></el-table-column>
+          <el-table-column prop="updateTime" label="更新时间" width="283"></el-table-column>
+
 
 
           <el-table-column label="其他" width="230px">
             <template slot-scope="scope">
-              <el-button
-                @click="edit(scope.row)"
-                type="text"
-                size="small"
-                >编辑</el-button
-              >
-              
+              <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+
             </template>
           </el-table-column>
         </el-table>
 
         <!-- 分页符 -->
-        <el-pagination
-          :current-page="currentPage"
-          :page-size="pageSize"
-          :total="total"
-          @current-change="handlePageChange"
-        ></el-pagination>
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="total"
+          @current-change="handlePageChange"></el-pagination>
       </div>
     </div>
   </div>
@@ -90,74 +146,112 @@
 export default {
   data() {
     return {
+      acForm: {
+        username: "",
+        pwd: "",
+        name: "",
+        phone: "",
+        email: "",
 
-     
+
+      },
+      projectForm: {
+        projectid: "",
+        projectname: "",
+        description: "",
+      },
+
+
       notificationList: [
         {
           projectID: "1",
           projectName: "海威华南地区总代",
           explain: "负责人：张总",
-          createTime:"2021/9/9 18:00",
+          createTime: "2021/9/9 18:00",
           updateTime: "2022/9/9 18:00",
-          
+
         },
-       {
+        {
           projectID: "2",
           projectName: "海威华南地区总代",
           explain: "负责人：张总",
-          createTime:"2021/9/9 18:00",
+          createTime: "2021/9/9 18:00",
           updateTime: "2022/9/9 18:00",
-          
+
         },
-      {
+        {
           projectID: "3",
           projectName: "海威华南地区总代",
           explain: "负责人：张总",
-          createTime:"2021/9/9 18:00",
+          createTime: "2021/9/9 18:00",
           updateTime: "2022/9/9 18:00",
-          
+
         },
-     {
+        {
           projectID: "4",
           projectName: "海威华南地区总代",
           explain: "负责人：张总",
-          createTime:"2021/9/9 18:00",
+          createTime: "2021/9/9 18:00",
           updateTime: "2022/9/9 18:00",
-          
+
         },
-      {
+        {
           projectID: "5",
           projectName: "海威华南地区总代",
           explain: "负责人：张总",
-          createTime:"2021/9/9 18:00",
+          createTime: "2021/9/9 18:00",
           updateTime: "2022/9/9 18:00",
-          
+
         },
-      {
+        {
           projectID: "6",
           projectName: "海威华南地区总代",
           explain: "负责人：张总",
-          createTime:"2021/9/9 18:00",
+          createTime: "2021/9/9 18:00",
           updateTime: "2022/9/9 18:00",
-          
+
         },
       ],
       currentPage: 1,
       pageSize: 10,
       total: 100,
+      firstpage: false,
+      secondpage: false,
     };
   },
   methods: {
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => { });
+    },
+    finish() {
+      this.secondpage = false
+
+      //处理逻辑
+    },
+    retreat() {
+      this.secondpage = false;
+      this.firstpage = true;
+    },
+    next() {
+
+      this.firstpage = false;
+      this.secondpage = true;
+    },
     add() {
       // 添加逻辑
+      this.firstpage = true;
     },
-  authorization(){
+    authorization() {
       //授权码
-  },
-  userlist(){
-    //用户列表
-  },
-    handleDetail(row) {},
+    },
+    userlist() {
+      //用户列表
+    },
+    handleDetail(row) { },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
     },
@@ -173,6 +267,7 @@ export default {
     width: 100%;
     height: 97px;
     background-color: rgba(1, 84, 120, 1);
+
     p {
       color: white;
       padding-top: 18px;
@@ -180,6 +275,7 @@ export default {
       font-kerning: normal;
       font-size: 23px;
     }
+
     .secondtext {
       color: white;
 
@@ -187,10 +283,16 @@ export default {
       font-size: 14px;
     }
   }
+
+  .long {
+    width: 350px;
+  }
+
   .bigbox {
     width: 100%;
     background-color: rgba(1, 84, 120, 1);
   }
+
   .notification-box {
     margin-top: 10px;
     height: 60px;
@@ -204,6 +306,7 @@ export default {
   .notification-box .title {
     padding-top: 10px;
   }
+
   .notification-item {
     text-align: center;
     flex: 1;
@@ -216,10 +319,11 @@ export default {
 
   .search-box {
     margin-top: 10px;
-   .new{
-     margin-left: -80px;
-     margin-top: 10px;
-   }
+
+    .new {
+      margin-left: -80px;
+      margin-top: 10px;
+    }
   }
 
   .notification-list {
