@@ -5,13 +5,43 @@
       <p class="secondtext">项目中设备、设备组列表及配置</p>
     </div>
     <el-dialog title="添加设备" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-      <span>这是一段信息</span>
+      <div>
+        <el-form :model="deviceForm" label-width="80px" :rules="rules">
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="SN码" prop="SN">
+                <el-input v-model="deviceForm.SN" placeholder="请输入内容" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="名称" prop="name">
+                <el-input v-model="deviceForm.name" placeholder="请输入内容" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="选择组织" class="select" prop="organizationid">
+                <el-select v-model="deviceForm.organizationid" placeholder="选择项目" class="long">
+                  <el-option v-for="option in projectOptions" :key="option.value" :label="option.label"
+                    :value="option.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="finish">完成</el-button>
+        <el-button type="primary" @click="finish" >完成</el-button>
       </span>
     </el-dialog>
-    
+
     <!-- 顶部盒子 -->
     <div class="bigbox">
       <!-- 搜索条件 -->
@@ -26,9 +56,8 @@
             <el-col :span="6">
               <el-form-item label="组织">
                 <el-select v-model="searchForm.organization" placeholder="请选择提醒类型">
-                  <el-option label="类型1" value="type1"></el-option>
-                  <el-option label="类型2" value="type2"></el-option>
-                  <!-- 其他类型选项 -->
+                  <el-option v-for="option in projectOptions" :key="option.value" :label="option.label"
+                    :value="option.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -108,16 +137,44 @@
 export default {
   data() {
     return {
-
       searchForm: {
-        SN: "",
-        organization: "",
-        attribute: "",
-        state: null,
-        devicename: '',
-        
+        deviceName:"",
+        organization :"",
+        attribute :"",
+        state :"",
+        devicename:""
+
 
       },
+      deviceForm: {
+        SN: "",
+        organizationid: "",
+        name: "",
+      },
+
+      rules: {
+        name: [
+          { required: true, message: '请输入名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        SN: [
+          {required: true}
+        ],
+        organizationid: [
+          {required: true}
+        ],
+      },
+      projectOptions: [ // 选项数组
+        {
+          label: '海威东南区域总代1',
+          value: '海威东南区域总代1'
+        },
+        {
+          label: '海威西南地区总代2',
+          value: '海威西南地区总代2'
+        }
+        // 添加更多选项...
+      ],
       notificationList: [
         {
           deviceSN: "HV-UIAZ738P007",
@@ -196,10 +253,10 @@ export default {
     },
     finish() {
       //处理添加逻辑
-      
+
 
       this.dialogVisible = false;
-      
+
     },
     handleSearch() {
       // 处理搜索逻辑
@@ -294,6 +351,11 @@ export default {
     .el-pagination {
       margin-top: 5px;
     }
+
+  }
+
+  .long {
+    width: 350px;
   }
 }
 </style>

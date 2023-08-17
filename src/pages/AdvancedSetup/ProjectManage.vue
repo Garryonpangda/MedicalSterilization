@@ -3,10 +3,10 @@
     <el-dialog title="添加项目" :visible.sync="firstpage" width="30%" :before-close="handleClose">
       <div>
         <div>
-          <el-form :model="addForm" label-width="70px" hide-required-asterisk="true">
+          <el-form :model="acForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="项目ID" required="true">
+                <el-form-item label="项目ID" prop="projectid">
                   <el-input v-model="projectForm.projectid" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -14,7 +14,7 @@
 
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="项目名称">
+                <el-form-item label="项目名称" prop="projectname">
                   <el-input v-model="projectForm.projectname" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -40,10 +40,10 @@
     <el-dialog title="创建初始账户" :visible.sync="secondpage" width="30%" :before-close="handleClose">
       <div>
         <div>
-          <el-form :model="addForm" label-width="70px" hide-required-asterisk="true">
+          <el-form :model="acForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="账户名" required="true">
+                <el-form-item label="账户名" prop="username">
                   <el-input v-model="acForm.username" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -51,7 +51,7 @@
 
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="密码" required="true">
+                <el-form-item label="密码" prop="pwd">
                   <el-input v-model="acForm.pwd" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -59,7 +59,7 @@
 
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="姓名" required="true">
+                <el-form-item label="姓名" >
                   <el-input v-model="acForm.name" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -67,7 +67,7 @@
 
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="手机号" required="true">
+                <el-form-item label="手机号" prop="phone">
                   <el-input v-model="acForm.phone" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -75,7 +75,7 @@
 
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="邮箱地址" required="true">
+                <el-form-item label="邮箱地址">
                   <el-input v-model="acForm.email" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -146,6 +146,33 @@
 export default {
   data() {
     return {
+      searchForm:{
+
+      },
+      rules: {
+        projectid: [
+          { required: true, message: '请输入项目ID', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        projectname: [
+          { required: true, message: '请输入项目名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        username: [
+          { required: true, message: '请输入项目名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        pwd: [
+          { required: true, message: '请输入项目名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入项目名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        
+        
+      },
       acForm: {
         username: "",
         pwd: "",
