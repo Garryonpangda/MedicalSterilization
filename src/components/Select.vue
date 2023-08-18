@@ -14,10 +14,10 @@
       </el-option>
       <el-option
         class="multiple"
-        :value="item.value"
-        :label="item.label"
+        :value=item.value
+        :label=item.label
         v-for="(item, key) in optionsData"
-        :key="key"
+        :key=key
       >
         <el-checkbox v-model="item.check" @change="handleTaskItemChange(item)">
           {{ item.label }}
@@ -46,6 +46,7 @@ export default {
   watch: {
     options: {
       handler(newVal) {
+        
         this.optionsData = newVal
         newVal.forEach(item => {
           if (item.check) {
@@ -68,6 +69,7 @@ export default {
   },
   methods: {
     handleoptionsAllChange(isAll) {
+      this.selectedOptions = []
       if (isAll) {
         this.optionsData.forEach((elm, idx) => {
           elm.check = true
@@ -82,7 +84,7 @@ export default {
       this.$emit('selected',this.selectedOptions)
     },
     handleTaskItemChange(item) {
-      // console.log(item)
+      console.log(item)
       // 这里是取出下标的方法，可以封装写出去
       Array.prototype.getArrayIndex = function (obj) {
         for (var i = 0; i < this.length; i++) {

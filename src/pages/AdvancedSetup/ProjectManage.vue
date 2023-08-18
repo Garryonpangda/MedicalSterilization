@@ -12,6 +12,17 @@
               </el-col>
             </el-row>
 
+            <!-- <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="项目ID" >
+                  <Select :options="options" @selected="selected"/>
+
+                </el-form-item>
+                
+                
+              </el-col>
+            </el-row> -->
+
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="项目名称" prop="projectname">
@@ -59,7 +70,7 @@
 
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="姓名" >
+                <el-form-item label="姓名">
                   <el-input v-model="acForm.name" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -143,10 +154,42 @@
 </template>
 
 <script>
+import Select from '@/components/Select.vue'
+
 export default {
+  components: {
+    Select
+  },
   data() {
     return {
-      searchForm:{
+      options: [
+        {
+          value: '001',
+          label: '黄金糕',
+          check: false
+        },
+        {
+          value: '002',
+          label: '双皮奶',
+          check: false
+        },
+        {
+          value: '003',
+          label: '蚵仔煎',
+          check: false
+        },
+        {
+          value: '004',
+          label: '龙须面',
+          check: false
+        },
+        {
+          value: '005',
+          label: '北京烤鸭',
+          check: false
+        }
+      ],
+      searchForm: {
 
       },
       rules: {
@@ -170,8 +213,8 @@ export default {
           { required: true, message: '请输入项目名称', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        
-        
+
+
       },
       acForm: {
         username: "",
@@ -247,6 +290,15 @@ export default {
     };
   },
   methods: {
+    selected(value){
+      console.log(value);
+      let str = value.join()
+      console.log(str)
+      // 注意选项为全部时数据里面的值为空字符串和无的情况
+      if(value.includes('') || value.length === 0){
+        // console.log(Object.keys(this.optionsData).join());
+      }
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
