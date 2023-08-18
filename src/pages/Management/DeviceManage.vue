@@ -4,7 +4,8 @@
       <p>项目设备</p>
       <p class="secondtext">项目中设备、设备组列表及配置</p>
     </div>
-    <el-dialog title="添加设备" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <!-- add -->
+    <el-dialog title="添加设备" :visible.sync="addVisible" width="30%" :before-close="handleClose">
       <div>
         <el-form :model="deviceForm" label-width="80px" :rules="rules">
           <el-row :gutter="15">
@@ -37,10 +38,32 @@
 
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="finish" >完成</el-button>
+        <el-button @click="addVisible = false">取消</el-button>
+        <el-button type="primary" @click="addfinish">完成</el-button>
       </span>
     </el-dialog>
+
+    <!-- adds -->
+    <el-dialog title="添加设备" :visible.sync="addsVisible" width="30%" :before-close="handleClose">
+      <div>
+        <el-steps :active="active" finish-status="success">
+          <el-step title="步骤 1" @click.native="on_click(0)"></el-step>
+          <el-step title="步骤 2" @click.native="on_click(1)"></el-step>
+          <el-step title="步骤 3" @click.native="on_click(2)"></el-step>
+        </el-steps>
+        <div v-show="active == 0">我是第一步显示的内容</div>
+        <div v-show="active == 1">我是第二步显示的内容</div>
+        <div v-show="active == 2">我是第二步完成后的内容</div>
+
+        <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addsVisible = false">取消</el-button>
+        <el-button type="primary" @click="addsfinish">完成</el-button>
+      </span>
+    </el-dialog>
+
 
     <!-- 顶部盒子 -->
     <div class="bigbox">
@@ -137,12 +160,13 @@
 export default {
   data() {
     return {
+      active: 0,
       searchForm: {
-        deviceName:"",
-        organization :"",
-        attribute :"",
-        state :"",
-        devicename:""
+        deviceName: "",
+        organization: "",
+        attribute: "",
+        state: "",
+        devicename: ""
 
 
       },
@@ -158,10 +182,10 @@ export default {
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         SN: [
-          {required: true}
+          { required: true }
         ],
         organizationid: [
-          {required: true}
+          { required: true }
         ],
       },
       projectOptions: [ // 选项数组
@@ -240,10 +264,19 @@ export default {
       currentPage: 1,
       pageSize: 10,
       total: 100,
-      dialogVisible: false,
+      addVisible: false,
+      addsVisible: false,
     };
   },
   methods: {
+    on_click(e) {
+      console.log(e);
+      if (e != "" || e != null) { this.active = e }
+    },
+
+    next() {
+      if (this.active++ > 2) this.active = 0;
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
@@ -251,11 +284,19 @@ export default {
         })
         .catch(_ => { });
     },
-    finish() {
+    addfinish() {
       //处理添加逻辑
 
 
-      this.dialogVisible = false;
+      this.addVisible = false;
+
+    },
+
+    addfinish() {
+      //处理添加逻辑
+
+
+      this.addsVisible = false;
 
     },
     handleSearch() {
@@ -265,12 +306,13 @@ export default {
       // 处理重置逻辑
     },
     adddevice() {
-      console.log("???");
-      this.dialogVisible = true;
+
+      this.addVisible = true;
       // 添加设备逻辑
     },
     batchadd() {
       // 批量添加逻辑
+      this.addsVisible = true;
     },
     handleDetail(row) { },
     handlePageChange(currentPage) {
