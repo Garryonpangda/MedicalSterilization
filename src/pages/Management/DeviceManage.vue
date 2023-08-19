@@ -51,16 +51,24 @@
           <el-step title="步骤 2" @click.native="on_click(1)"></el-step>
           <el-step title="步骤 3" @click.native="on_click(2)"></el-step>
         </el-steps>
-        <div v-show="active == 0">我是第一步显示的内容</div>
-        <div v-show="active == 1">我是第二步显示的内容</div>
-        <div v-show="active == 2">我是第二步完成后的内容</div>
+        <div v-show="active == 0" class="stepbox">
+          第一步：下载模板
+        </div>
+        <div v-show="active == 1">
+          第二步：上传Excel
+        </div>
+        <div v-show="active == 2">
+          第三步：导入设备
+        </div>
 
-        <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+        
 
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addsVisible = false">取消</el-button>
-        <el-button type="primary" @click="addsfinish">完成</el-button>
+        <el-button type="primary" v-show="active != 0" @click="previous">上一步</el-button>
+        <el-button type="primary" v-show="active != 3" @click="next">下一步</el-button>
+        <el-button type="primary" v-show="active == 3" @click="addsfinish">完成</el-button>
       </span>
     </el-dialog>
 
@@ -269,13 +277,22 @@ export default {
     };
   },
   methods: {
+    previous(){
+      console.log(this.active)
+      if (this.active-- < 2) {
+        this.active = 0;
+      }
+    },
     on_click(e) {
       console.log(e);
       if (e != "" || e != null) { this.active = e }
     },
 
     next() {
-      if (this.active++ > 2) this.active = 0;
+      console.log(this.active)
+      if (this.active++ > 2) {
+        this.active = 0;
+      }
     },
     handleClose(done) {
       this.$confirm('确认关闭？')
@@ -292,7 +309,7 @@ export default {
 
     },
 
-    addfinish() {
+    addsfinish() {
       //处理添加逻辑
 
 
@@ -395,6 +412,7 @@ export default {
     }
 
   }
+  
 
   .long {
     width: 350px;
