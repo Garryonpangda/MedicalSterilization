@@ -7,34 +7,17 @@
       <h2>深紫外消杀管理平台</h2>
       <el-form v-if="!isRegister" ref="formRef" :rules="rules" :model="form">
         <el-form-item prop="name" class="form-group">
-          <el-input
-            type="txet"
-            v-model="form.name"
-            placeholder="请输入用户名"
-            prefix-icon="el-icon-user"
-          ></el-input>
+          <el-input type="txet" v-model="form.name" placeholder="请输入用户名" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
         <el-form-item prop="password" class="form-group">
-          <el-input
-            type="password"
-            show-password
-            id="password"
-            v-model="form.password"
-            placeholder="密码"
-            prefix-icon="el-icon-lock"
-          ></el-input>
+          <el-input type="password" show-password id="password" v-model="form.password" placeholder="密码"
+            prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item prop="code" class="verification">
-          <el-input
-            type="text"
-            id="password"
-            v-model="form.password"
-            placeholder="验证码"
-            prefix-icon="el-icon-s-grid"
-          ></el-input>
-          <span class="verification-code" @click="refreshVerificationCode">{{
-            verificationCode
-          }}</span>
+          <el-input type="text" id="code" v-model="form.code" placeholder="验证码" prefix-icon="el-icon-s-grid"></el-input>
+          <span class="verification-code" @click="refreshVerificationCode">
+            <img :src="img" alt="" class="img">
+          </span>
         </el-form-item>
         <el-form-item prop="remember" class="form-group remember-password">
           <el-checkbox v-model="form.remember">直接登录</el-checkbox>
@@ -44,53 +27,22 @@
       </el-form>
       <el-form ref="formRef" :rules="rules" :model="registerForm" v-else>
         <el-form-item prop="name" class="form-group">
-          <el-input
-            type="name"
-            id="register-email"
-            v-model="registerForm.name"
-            placeholder="请输入用户名"
-            prefix-icon="el-icon-user"
-            required
-          ></el-input>
+          <el-input type="name" id="register-email" v-model="registerForm.name" placeholder="请输入用户名"
+            prefix-icon="el-icon-user" required></el-input>
         </el-form-item>
         <el-form-item prop="password" class="form-group">
-          <el-input
-            type="password"
-            id="register-password"
-            show-password
-            v-model="registerForm.password"
-            placeholder="密码"
-            prefix-icon="el-icon-lock"
-            @click="togglePasswordVisibility"
-          ></el-input>
+          <el-input type="password" id="register-password" show-password v-model="registerForm.password" placeholder="密码"
+            prefix-icon="el-icon-lock" @click="togglePasswordVisibility"></el-input>
         </el-form-item>
         <el-form-item prop="confirmPassword" class="form-group">
-          <el-input
-            type="password"
-            id="confirm-password"
-            show-password
-            v-model="registerForm.confirmPassword"
-            placeholder="确认密码"
-            prefix-icon="el-icon-lock"
-          ></el-input>
+          <el-input type="password" id="confirm-password" show-password v-model="registerForm.confirmPassword"
+            placeholder="确认密码" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
-        <el-form-item
-          prop="verificationCode"
-          class="form-group verification-group"
-        >
-          <el-input
-            type="text"
-            v-model="registerForm.verificationCode"
-            placeholder="验证码"
-            prefix-icon="el-icon-s-grid"
-            class="code"
-          ></el-input>
-          <el-button
-            type="default"
-            class="send-verification"
-            @click="sendVerificationCode"
-            :disabled="verificationCodeSent || countdown > 0"
-          >
+        <el-form-item prop="verificationCode" class="form-group verification-group">
+          <el-input type="text" v-model="registerForm.verificationCode" placeholder="验证码" prefix-icon="el-icon-s-grid"
+            class="code"></el-input>
+          <el-button type="default" class="send-verification" @click="sendVerificationCode"
+            :disabled="verificationCodeSent || countdown > 0">
             <template v-if="countdown > 0"> {{ countdown }}s </template>
             <template v-else>
               {{ verificationCodeSent ? "已发送" : "发送验证码" }}
@@ -106,9 +58,15 @@
   </div>
 </template>
 <script>
+
+import { getVerifyCode } from '@/utils/api/VerifyCode';
+
+import { doLogin } from '@/utils/api/User'
+import {useUserStore} from "@/stores/user"
 export default {
   data() {
     return {
+      img: "",
       isRegister: false,
       form: {
         name: "",
@@ -162,11 +120,39 @@ export default {
       }
       return code;
     },
-    refreshVerificationCode() {
+    async refreshVerificationCode() {
       this.verificationCode = this.generateVerificationCode();
     },
-    login() {
-      this.$router.push("/home/control");
+
+    getCookie(name) {
+      const cookies = document.cookie.split(";"); // 将所有cookie拆分成数组
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim(); // 去除cookie前后的空格
+        if (cookie.startsWith(name + "=")) {
+          return cookie.substring(name.length + 1); // 返回cookie值
+        }
+      }
+      return null; // 如果未找到指定的cookie，则返回null
+    },
+
+    async login() {
+      const userStore = useUserStore()
+      
+
+      
+      const res = await doLogin(this.form.name,this.form.password,this.form.code,this.form.remember)
+      console.log(res)
+      if(res.code==20010){
+        this.$message.error("验证码错误");
+      }else if(res.code==20050){
+        this.$message.error("账号或密码错误");
+      }else if(res.code==20011){
+        this.$message.success("登录成功");
+        userStore.updateUserInfo(res.data)
+        this.$router.push("/home/control");
+      }
+
+      
       // 处理登录成功的其他逻辑
 
       //   var username = localStorage.getItem("TOKEN");
@@ -175,11 +161,11 @@ export default {
       //   console.log("-------", username2);
       //   this.$router.push("/home/firstpage");
       // } else {
-      //   this.$message.error("邮箱或密码错误");
+        
       //   return;
       // }
     },
-    sendVerificationCode() {},
+    sendVerificationCode() { },
     startCountdown() {
       this.timer = setInterval(() => {
         if (this.countdown > 0) {
@@ -196,6 +182,10 @@ export default {
     togglePasswordVisibility() {
       this.passwordVisible = !this.passwordVisible;
     },
+  },
+  async created() {
+    const res = await getVerifyCode(2)
+    this.img = res.data
   },
   beforeDestroy() {
     if (this.timer) {
@@ -225,6 +215,7 @@ export default {
   margin-left: -670px;
   margin-top: -100px;
 }
+
 .right {
   position: absolute;
   width: 50px;
@@ -235,6 +226,7 @@ export default {
   margin-left: 10px;
   margin-top: -27px;
 }
+
 .headtitle h1 {
   color: rgb(54, 50, 56);
   font-family: Georgia, serif;
@@ -286,6 +278,7 @@ form {
   align-items: center;
   color: #39598a;
 }
+
 .code {
   width: 250px;
 }
@@ -345,9 +338,15 @@ button[type="submit"]:hover {
   margin-top: 10px;
   text-decoration: underline;
 }
+
+.img {
+  max-width: 100%;
+  height: 100%;
+}
+
 .verification-code {
   display: inline-block;
-  position:fixed;
+  position: fixed;
   width: 80px;
   height: 39px;
   line-height: 32px;
