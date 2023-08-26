@@ -62,7 +62,7 @@
 import { getVerifyCode } from '@/utils/api/VerifyCode';
 
 import { doLogin } from '@/utils/api/User'
-import {useUserStore} from "@/stores/user"
+import { useUserStore } from "@/stores/user"
 export default {
   data() {
     return {
@@ -121,7 +121,8 @@ export default {
       return code;
     },
     async refreshVerificationCode() {
-      this.verificationCode = this.generateVerificationCode();
+      const res = await getVerifyCode()
+      this.img = res.data
     },
 
     getCookie(name) {
@@ -137,22 +138,25 @@ export default {
 
     async login() {
       const userStore = useUserStore()
-      
 
-      
-      const res = await doLogin(this.form.name,this.form.password,this.form.code,this.form.remember)
+
+
+      const res = await doLogin(this.form.name, this.form.password, this.form.code, this.form.remember)
       console.log(res)
-      if(res.code==20010){
+      if (res.code == 20010) {
+        const res = await getVerifyCode(2)
+        this.img = res.data
         this.$message.error("验证码错误");
-      }else if(res.code==20050){
+
+      } else if (res.code == 20050) {
         this.$message.error("账号或密码错误");
-      }else if(res.code==20011){
+      } else if (res.code == 20011) {
         this.$message.success("登录成功");
         userStore.updateUserInfo(res.data)
         this.$router.push("/home/control");
       }
 
-      
+
       // 处理登录成功的其他逻辑
 
       //   var username = localStorage.getItem("TOKEN");
@@ -161,7 +165,7 @@ export default {
       //   console.log("-------", username2);
       //   this.$router.push("/home/firstpage");
       // } else {
-        
+
       //   return;
       // }
     },
@@ -184,7 +188,7 @@ export default {
     },
   },
   async created() {
-    const res = await getVerifyCode(2)
+    const res = await getVerifyCode()
     this.img = res.data
   },
   beforeDestroy() {

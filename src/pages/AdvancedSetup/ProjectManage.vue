@@ -1,32 +1,24 @@
 <template>
   <div class="notification-page">
+    <!-- 创建项目 -->
     <el-dialog title="添加项目" :visible.sync="firstpage" width="30%" :before-close="handleClose">
       <div>
         <div>
-          <el-form :model="acForm" label-width="80px" :rules="rules">
+          <el-form :model="projectForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="项目ID" prop="projectid">
-                  <el-input v-model="projectForm.projectid" placeholder="请输入" class="long"></el-input>
+                  <el-input v-model="projectForm.projectId" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
 
-            <!-- <el-row :gutter="15">
-              <el-col :span="400">
-                <el-form-item label="项目ID" >
-                  <Select :options="options" @selected="selected"/>
 
-                </el-form-item>
-                
-                
-              </el-col>
-            </el-row> -->
 
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="项目名称" prop="projectname">
-                  <el-input v-model="projectForm.projectname" placeholder="请输入" class="long"></el-input>
+                  <el-input v-model="projectForm.projectName" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -34,7 +26,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="说明">
-                  <el-input v-model="projectForm.description" placeholder="请输入" class="long"></el-input>
+                  <el-input v-model="projectForm.remark" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -48,6 +40,7 @@
 
     </el-dialog>
 
+    <!-- 创建账户 -->
     <el-dialog title="创建初始账户" :visible.sync="secondpage" width="30%" :before-close="handleClose">
       <div>
         <div>
@@ -63,7 +56,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="密码" prop="pwd">
-                  <el-input v-model="acForm.pwd" placeholder="请输入" class="long"></el-input>
+                  <el-input v-model="acForm.password" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -79,7 +72,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="手机号" prop="phone">
-                  <el-input v-model="acForm.phone" placeholder="请输入" class="long"></el-input>
+                  <el-input v-model="acForm.phonenumber" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -101,6 +94,52 @@
       </div>
 
     </el-dialog>
+
+    <!-- 编辑项目 -->
+    <el-dialog title="编辑项目" :visible.sync="editpage" width="30%" :before-close="handleClose">
+      <div>
+        <div>
+          <el-form :model="editproject" label-width="80px">
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="项目ID">
+                  <div>{{ editproject.projectId }}</div>
+                  <!-- <el-input v-model=""  class="long"></el-input> -->
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="项目名称">
+                  <el-input v-model="editproject.projectName" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="说明">
+                  <el-input v-model="editproject.remark" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="danger" @click="deleteproject">移除项目</el-button>
+          <el-button type="primary" @click="edit_finish" class="right">完成</el-button>
+          <el-button @click="editpage = false" class="right">取消</el-button>
+
+        </span>
+      </div>
+
+    </el-dialog>
+
+    <!-- 删除项目 -->
+
+
+
     <div class="bigtitle">
       <p>项目</p>
       <p class="secondtext">项目管理</p>
@@ -129,10 +168,10 @@
         }">
           <el-table-column type="selection" width="65"></el-table-column>
 
-          <el-table-column prop="projectID" label="项目ID" width="200"></el-table-column>
+          <el-table-column prop="projectId" label="项目ID" width="200"></el-table-column>
           <el-table-column prop="projectName" label="项目名称" width="150"></el-table-column>
-          <el-table-column prop="explain" label="说明" width="250"></el-table-column>
-          <el-table-column prop="createTime" label="创建时间" width="150"></el-table-column>
+          <el-table-column prop="remark" label="说明" width="250"></el-table-column>
+          <el-table-column prop="creatTime" label="创建时间" width="150"></el-table-column>
           <el-table-column prop="updateTime" label="更新时间" width="283"></el-table-column>
 
 
@@ -155,6 +194,9 @@
 
 <script>
 import Select from '@/components/Select.vue'
+import { ListAllProject } from "@/utils/api/Advanced_setting/ProjectManage"
+import { DeleteProject } from "@/utils/api/Advanced_setting/ProjectManage"
+import { AddProject } from "@/utils/api/Advanced_setting/ProjectManage"
 
 export default {
   components: {
@@ -218,20 +260,24 @@ export default {
       },
       acForm: {
         username: "",
-        pwd: "",
+        password: "",
         name: "",
-        phone: "",
+        phonenumber: "",
         email: "",
 
 
       },
       projectForm: {
-        projectid: "",
-        projectname: "",
-        description: "",
+        projectId: "",
+        projectName: "",
+        remark: "",
       },
 
-
+      editproject: {
+        projectId: "",
+        projectName: "",
+        remark: ""
+      },
       notificationList: [
         {
           projectID: "1",
@@ -287,15 +333,60 @@ export default {
       total: 100,
       firstpage: false,
       secondpage: false,
+      editpage: false,
     };
   },
   methods: {
-    selected(value){
+    deleteproject() {
+      this.$prompt('请输入特殊密码', '移除项目', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+
+        inputErrorMessage: '请输入特殊密码',
+        type: 'error'
+      }).then(({ value }) => {
+        //发请求
+        DeleteProject(this.editproject.projectId, value).then(response => {
+          console.log(response.data); // 访问响应数据
+          if (response.code == 200) {
+            //删除成功
+            this.$message({
+              type: 'success',
+              message: '删除成功: '
+            });
+          } else if (response.code == 201) {
+            //删除失败
+            this.$message({
+              type: 'error',
+              message: '删除失败'
+            });
+          }
+
+        })
+          .catch(error => {
+            console.error(error);
+          });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消移除项目'
+        });
+      });
+    },
+
+    edit_finish() {
+      this.editpage = false
+    },
+    edit(project) {
+      this.editpage = true;
+      this.editproject = project
+    },
+    selected(value) {
       console.log(value);
       let str = value.join()
       console.log(str)
       // 注意选项为全部时数据里面的值为空字符串和无的情况
-      if(value.includes('') || value.length === 0){
+      if (value.includes('') || value.length === 0) {
         // console.log(Object.keys(this.optionsData).join());
       }
     },
@@ -307,6 +398,31 @@ export default {
         .catch(_ => { });
     },
     finish() {
+      var data = JSON.stringify({
+        "project": this.projectForm,
+        "user": this.acForm
+      })
+      console.log(data);
+      AddProject(data).then(response => {
+        console.log(response);
+        if(response.code==200){
+          this.$message({
+              type: 'success',
+              message: '添加成功'
+            });
+        }else if(response.code==201){
+          this.$message({
+              type: 'error',
+              message: '添加失败'
+            });
+        }
+        
+
+      })
+        .catch(error => {
+          console.error(error);
+        });
+
       this.secondpage = false
 
       //处理逻辑
@@ -334,6 +450,11 @@ export default {
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
     },
+  },
+  async created() {
+    const res = await ListAllProject()
+    this.notificationList = res.data
+    console.log(res)
   },
 };
 </script>
@@ -410,5 +531,11 @@ export default {
       margin-top: 5px;
     }
   }
+
+  .right {
+    float: right;
+  }
+
+
 }
 </style>

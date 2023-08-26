@@ -19,3 +19,7 @@ export const doLogin = function(username, password, kaptcha, remember_me) {
     });
 
 }
+
+export const logout = function() {
+    return request.get('/logout');
+}
