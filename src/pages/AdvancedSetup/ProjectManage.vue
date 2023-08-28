@@ -1,13 +1,13 @@
 <template>
   <div class="notification-page">
     <!-- 创建项目 -->
-    <el-dialog title="添加项目" :visible.sync="firstpage" width="30%" :before-close="handleClose">
+    <el-dialog title="添加项目" :visible.sync="firstpage" width="30%" :before-close="handleClose" status-icon>
       <div>
         <div>
           <el-form :model="projectForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="项目ID" prop="projectid">
+                <el-form-item label="项目ID" prop="projectId">
                   <el-input v-model="projectForm.projectId" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -17,7 +17,7 @@
 
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="项目名称" prop="projectname">
+                <el-form-item label="项目名称" prop="projectName">
                   <el-input v-model="projectForm.projectName" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -194,15 +194,78 @@
 
 <script>
 import Select from '@/components/Select.vue'
-import { ListAllProject } from "@/utils/api/Advanced_setting/ProjectManage"
-import { DeleteProject } from "@/utils/api/Advanced_setting/ProjectManage"
-import { AddProject } from "@/utils/api/Advanced_setting/ProjectManage"
+import { ListAllProject,DeleteProject,AddProject,CheckProjectId ,CheckProjectName,CheckUserName} from "@/utils/api/Advanced_setting/ProjectManage"
+
 
 export default {
   components: {
     Select
   },
   data() {
+    var checkprojectid =
+      async (rule, value, callback) => {
+        const regex = /^[0-9]+$/;
+
+        if (value === "") {
+          callback(new Error("请输入项目ID"));
+          return
+        } else if (!regex.test(value)) {
+          callback(new Error("请输入数字"));
+          return;
+        } else {
+          const res = await CheckProjectId(value)
+          if (res.code == 200) {
+            if (res.data == true) {
+              callback()
+              return
+            } else {
+              callback(new Error("该项目ID已存在"));
+            }
+          } else {
+            callback(new Error("Network Error"));
+          }
+        }
+      };
+
+    var checkprojectname =
+      async (rule, value, callback) => {
+        if (value === "") {
+          callback(new Error("请输入项目名称"));
+          return
+        } else {
+          const res = await CheckProjectName(value)
+          if (res.code == 200) {
+            if (res.data == true) {
+              callback()
+              return
+            } else {
+              callback(new Error("该项目名称已存在"));
+            }
+          } else {
+            callback(new Error("Network Error"));
+          }
+        }
+      };
+
+    var checkusername =
+      async (rule, value, callback) => {
+        if (value === "") {
+          callback(new Error("请输入项目ID"));
+          return
+        } else {
+          const res = await CheckUserName(value)
+          if (res.code == 200) {
+            if (res.data == true) {
+              callback()
+              return
+            } else {
+              callback(new Error("该账户名已存在"));
+            }
+          } else {
+            callback(new Error("Network Error"));
+          }
+        }
+      };
     return {
       options: [
         {
@@ -235,25 +298,27 @@ export default {
 
       },
       rules: {
-        projectid: [
-          { required: true, message: '请输入项目ID', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        projectId: [
+          { validator: checkprojectid, trigger: 'blur' },
+          { required: true, trigger: 'blur' },
+
         ],
-        projectname: [
+        projectName: [
+          { validator: checkprojectname, trigger: 'blur' },
           { required: true, message: '请输入项目名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         username: [
-          { required: true, message: '请输入项目名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        { validator: checkusername, trigger: 'blur' },
+          { required: true, message: '请输入账户名', trigger: 'blur' },
         ],
         pwd: [
-          { required: true, message: '请输入项目名称', trigger: 'blur' },
+          { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         phone: [
-          { required: true, message: '请输入项目名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' },
+          // { pattern: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/, message: '请输入正确的手机号', trigger: "blur" },
         ],
 
 
@@ -405,18 +470,18 @@ export default {
       console.log(data);
       AddProject(data).then(response => {
         console.log(response);
-        if(response.code==200){
+        if (response.code == 200) {
           this.$message({
-              type: 'success',
-              message: '添加成功'
-            });
-        }else if(response.code==201){
+            type: 'success',
+            message: '添加成功'
+          });
+        } else if (response.code == 201) {
           this.$message({
-              type: 'error',
-              message: '添加失败'
-            });
+            type: 'error',
+            message: '添加失败'
+          });
         }
-        
+
 
       })
         .catch(error => {

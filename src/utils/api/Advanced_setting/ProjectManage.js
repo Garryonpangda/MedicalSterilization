@@ -32,3 +32,35 @@ export const AddProject = function(data) {
     });
 
 }
+
+export const CheckProjectId = function(projectid) {
+    return request.get('/advanced_setting/CheckProjectId', {
+        params: {
+            projectid
+        }
+    })
+}
+
+
+export const CheckProjectName = function(projectname) {
+    return request.get('/advanced_setting/CheckProjectName', {
+        params: { projectname }
+    })
+}
+
+export const CheckUserName = function(username) {
+    return request.get('/advanced_setting/CheckUserName', {
+        params: { username }
+    })
+}
+
+export const ListUsers = function() {
+
+
+    return request.post('/advanced_setting/ListUsers', {
+        headers: {
+            'content-type': 'application/json'
+        }
+    });
+
+}

@@ -165,6 +165,7 @@
 </template>
 
 <script>
+import {ListAllOrgnization} from "@/utils/api/Mocha_itom/DeviceManage"
 export default {
   data() {
     return {
@@ -301,10 +302,9 @@ export default {
         })
         .catch(_ => { });
     },
+    
     addfinish() {
       //处理添加逻辑
-
-
       this.addVisible = false;
 
     },
@@ -336,6 +336,7 @@ export default {
       this.currentPage = currentPage;
     },
   },
+  
 };
 </script>
 

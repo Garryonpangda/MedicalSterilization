@@ -77,15 +77,14 @@
             <el-row :gutter="15">
               <el-col :span="8">
                 <el-form-item label="名称">
-                  <el-input v-model="searchForm.name" placeholder="请输入"></el-input>
+                  <el-input v-model="searchForm.username" placeholder="请输入"></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="8">
                 <el-form-item label="选择项目" class="select">
-                  <el-select v-model="searchForm.project" placeholder="选择项目">
-                    <el-option label="海威东南区域总代（当前项目）海威东南区域总代（当前项目）" value="海威东南区域总代（当前项目）"></el-option>
-                    <el-option label="海威西南地区总代" value="海威西南地区总代"></el-option>
+                  <el-select v-model="searchForm.projectid" placeholder="选择项目">
+                    <el-option v-for="option in projectoptions" :key="option.id" :label="option.projectName" :value="option.projectId"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -100,17 +99,16 @@
             <el-row :gutter="10">
               <el-col :span="8">
                 <el-form-item label="手机号">
-                  <el-input v-model="searchForm.phone" placeholder="请输入"></el-input>
+                  <el-input v-model="searchForm.phonenumber" placeholder="请输入"></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="8">
                 <el-form-item label="账号状态" class="select">
-                  <el-select v-model="searchForm.acstate" placeholder="请选择账号状态">
-                    <el-option label="全部" value="全部"></el-option>
-                    <el-option label="正常" value="正常"></el-option>
-                    <el-option label="冻结" value="冻结"></el-option>
-                    <el-option label="关闭" value="关闭"></el-option>
+                  <el-select v-model="searchForm.status" placeholder="请选择账号状态">
+                    <el-option label="全部" :value="2"></el-option>
+                    <el-option label="正常" :value="1"></el-option>
+                    <el-option label="冻结" :value="0"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -137,13 +135,13 @@
 
             <el-table-column prop="name" label="用户名" width="100"></el-table-column>
             <el-table-column prop="username" label="登录账号名" width="150"></el-table-column>
-            <el-table-column prop="phone" label="手机号" width="100"></el-table-column>
+            <el-table-column prop="phonenumber" label="手机号" width="100"></el-table-column>
             <el-table-column prop="email" label="邮箱" width="150"></el-table-column>
-            <el-table-column prop="role" label="角色" width="100"></el-table-column>
+            <el-table-column prop="roles" label="角色" width="100"></el-table-column>
 
-            <el-table-column prop="lasttime" label="上次登录时间" width="120"></el-table-column>
+            <el-table-column prop="updateTime" label="上次登录时间" width="120"></el-table-column>
 
-            <el-table-column prop="acstate" label="账号状态" width="100"></el-table-column>
+            <el-table-column prop="status" label="账号状态" width="100"></el-table-column>
 
             <el-table-column label="操作" width="250px">
               <template slot-scope="scope">
@@ -166,6 +164,8 @@
 
 <script>
 import Select from '@/components/Select.vue'
+
+import {ListUsers,ListAllProject,SelectUser} from"@/utils/api/Advanced_setting/AccountManage"
 
 export default {
 
@@ -228,12 +228,13 @@ export default {
         ],
       },
       searchForm: {
-        name: "",
-        phone: "",
-        project: "",
-        acstate: "",
+        username: "",
+        phonenumber: "",
+        projectid: null,
+        status: null,
         email: ""
       },
+      projectoptions:[],
       notificationList: [
         {
           name: "lin",
@@ -322,8 +323,11 @@ export default {
         .catch(_ => { });
     },
 
-    select() {
-
+    async select() {
+      var data = JSON.stringify(this.searchForm)
+      var res= await SelectUser(data)
+      console.log(res);
+      this.notificationList=res.data
     },
     detail() {
 
@@ -341,7 +345,11 @@ export default {
       this.dialogVisible = false
     },
     reset() {
-
+      this.searchForm.username=""
+      this.searchForm.phonenumber=""
+      this.searchForm.projectid=null
+      this.searchForm.status=null
+      this.searchForm.email=""
     },
     authorization() {
       //授权码
@@ -354,6 +362,16 @@ export default {
       this.currentPage = currentPage;
     },
   },
+  async created(){
+    //未完成：判断当前账号是不是hw账号再进行请求
+    const users=await ListUsers()
+    console.log(users);
+    this.notificationList=users.data
+    const projects=await ListAllProject()
+    console.log(projects);
+    this.projectoptions=projects.data
+    
+  }
 };
 </script>
 

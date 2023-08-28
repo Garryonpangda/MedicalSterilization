@@ -73,11 +73,17 @@
             </el-col>
           </el-row>
           <el-row :gutter="10">
+            
             <el-col :span="12">
               <el-form-item>
+                <el-button type="primary" @click="search">查询</el-button>
+                <el-button type="primary" @click="reset">重置</el-button>
                 <el-button type="primary" @click="add">新建</el-button>
+                
               </el-form-item>
+              
             </el-col>
+            
           </el-row>
         </el-form>
       </div>
@@ -90,13 +96,13 @@
         }">
           <el-table-column type="selection" width="65"></el-table-column>
 
-          <el-table-column prop="name" label="名称" width="200"></el-table-column>
-          <el-table-column prop="identification" label="标识" width="150"></el-table-column>
-          <el-table-column prop="linkman" label="联系人信息" width="100"></el-table-column>
-          <el-table-column prop="phone" label="电话" width="150"></el-table-column>
-          <el-table-column prop="localtion" label="位置" width="283"></el-table-column>
+          <el-table-column prop="orgnization.name" label="名称" width="200"></el-table-column>
+          <el-table-column prop="orgnization.characteristic" label="标识" width="150"></el-table-column>
+          <el-table-column prop="orgnization.contact" label="联系人信息" width="100"></el-table-column>
+          <el-table-column prop="orgnization.phonenumber" label="电话" width="150"></el-table-column>
+          <el-table-column prop="orgnization.locate" label="位置" width="283"></el-table-column>
 
-          <el-table-column prop="Number" label="设备数量" width="100"></el-table-column>
+          <el-table-column prop="devicenum" label="设备数量" width="100"></el-table-column>
 
           <el-table-column label="其他" width="230px">
             <template slot-scope="scope">
@@ -116,6 +122,8 @@
 </template>
 
 <script>
+import {ListAllOrgnization,ListUsersByOrgnizationId,SelectOrgnization} from "@/utils/api/Mocha_itom/Organization"
+
 export default {
   data() {
     return {
@@ -143,62 +151,7 @@ export default {
         name: "",
         phone: ""
       },
-      notificationList: [
-        {
-          name: "桂林市医学院附属医院",
-          identification: "GL-02-L",
-          linkman: "张主任",
-          phone: "17832873787",
-          localtion: "桂林市人民医院",
-          Number: "200",
-
-        },
-        {
-          name: "桂林市医学院附属医院",
-          identification: "GL-02-L",
-          linkman: "张主任",
-          phone: "17832873787",
-          localtion: "桂林市人民医院",
-          Number: "200",
-
-        },
-        {
-          name: "桂林市医学院附属医院",
-          identification: "GL-02-L",
-          linkman: "张主任",
-          phone: "17832873787",
-          localtion: "桂林市人民医院",
-          Number: "200",
-
-        },
-        {
-          name: "桂林市医学院附属医院",
-          identification: "GL-02-L",
-          linkman: "张主任",
-          phone: "17832873787",
-          localtion: "桂林市人民医院",
-          Number: "200",
-
-        },
-        {
-          name: "桂林市医学院附属医院",
-          identification: "GL-02-L",
-          linkman: "张主任",
-          phone: "17832873787",
-          localtion: "桂林市人民医院",
-          Number: "200",
-
-        },
-        {
-          name: "桂林市医学院附属医院",
-          identification: "GL-02-L",
-          linkman: "张主任",
-          phone: "17832873787",
-          localtion: "桂林市人民医院",
-          Number: "200",
-
-        },
-      ],
+      notificationList: [],
       currentPage: 1,
       pageSize: 10,
       total: 100,
@@ -207,26 +160,68 @@ export default {
   methods: {
     finish() {
       //处理添加逻辑
-
+      console.log(this.organizationForm);
 
       this.dialogVisible = false;
+
+    },
+    async search(){
+      var res= await SelectOrgnization(this.searchForm.name,this.searchForm.phone)
+      if(res.code==200){
+        this.notificationList=res.data
+      }
+      console.log(res);
+    },
+    reset(){
 
     },
     add() {
       // 添加逻辑
       this.dialogVisible=true
     },
-    authorization() {
+    authorization(row) {
       //授权码
+      // console.log(row);
+      var orgnizationid=row.orgnization.id
+      // 请求获取组织的详细信息
     },
-    userlist() {
+    async userlist(row) {
       //用户列表
+      // console.log(row);
+      var orgnizationid=row.orgnization.id
+      // 请求获取组织的详细信息
+      var res= await ListUsersByOrgnizationId(orgnizationid)
+      if(res.code==200){
+        // this.notificationList=res.data
+      }
+      console.log(res)
+      
+
     },
-    handleDetail(row) { },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => { });
+    },
+    handleDetail(row) { 
+      var organizationid=row.orgnization.id
+      console.log(organizationid);
+      //请求获取组织的详细信息
+    },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
     },
   },
+  async created(){
+    var res=await ListAllOrgnization()
+    if(res.code==200){
+      this.notificationList=res.data
+    }
+    console.log(res);
+    
+  }
 };
 </script>
 
