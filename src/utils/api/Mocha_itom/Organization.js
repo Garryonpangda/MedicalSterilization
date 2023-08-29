@@ -31,3 +31,12 @@ export const SelectOrgnization = function(name, phonenum) {
         }
     })
 }
+
+export const AddOrganization = function(data) {
+    return request.post('/mocha_itom/AddOrganization', data, {
+        headers: {
+            'content-type': 'application/json'
+        }
+    });
+
+}

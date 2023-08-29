@@ -166,6 +166,7 @@
 
 <script>
 import {ListAllOrgnization} from "@/utils/api/Mocha_itom/DeviceManage"
+import {ListDevice} from "@/utils/api/Mocha_itom/DeviceManage"
 export default {
   data() {
     return {

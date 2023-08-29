@@ -24,13 +24,13 @@
             </el-col>
           </el-row>
 
-          <el-row :gutter="15" >
-            <el-col :span="400" >
-              <el-form-item label="角色选择" prop="role" >
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="角色选择" prop="role">
                 <div class="long">
-                  <Select :options="options" @selected="selected"/>
+                  <Select :options="options" @selected="selected" />
                 </div>
-                
+
 
               </el-form-item>
             </el-col>
@@ -84,7 +84,8 @@
               <el-col :span="8">
                 <el-form-item label="选择项目" class="select">
                   <el-select v-model="searchForm.projectid" placeholder="选择项目">
-                    <el-option v-for="option in projectoptions" :key="option.id" :label="option.projectName" :value="option.projectId"></el-option>
+                    <el-option v-for="option in projectoptions" :key="option.id" :label="option.projectName"
+                      :value="option.projectId"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -117,7 +118,7 @@
               <el-col :span="12">
                 <el-form-item>
                   <el-button type="primary" @click="select">查询</el-button>
-                  <el-button type="primary" @click="reset">重置</el-button>
+                  <el-button @click="reset">重置</el-button>
                   <el-button type="primary" @click="add">+新建</el-button>
                 </el-form-item>
               </el-col>
@@ -165,7 +166,7 @@
 <script>
 import Select from '@/components/Select.vue'
 
-import {ListUsers,ListAllProject,SelectUser} from"@/utils/api/Advanced_setting/AccountManage"
+import { ListUsers, ListAllProject, SelectUser } from "@/utils/api/Advanced_setting/AccountManage"
 
 export default {
 
@@ -202,12 +203,12 @@ export default {
         }
       ],
       acForm: {
-        username:"",
-        pwd:"",
-        role:null,
-        name:"",
-        phone:"",
-        email:"",
+        username: "",
+        pwd: "",
+        role: null,
+        name: "",
+        phone: "",
+        email: "",
       },
       rules: {
         username: [
@@ -234,7 +235,7 @@ export default {
         status: null,
         email: ""
       },
-      projectoptions:[],
+      projectoptions: [],
       notificationList: [
         {
           name: "lin",
@@ -307,7 +308,7 @@ export default {
   methods: {
     selected(value) {
       console.log(value);
-      this.acForm.role=value
+      this.acForm.role = value
       let str = value.join()
       console.log(str)
       // 注意选项为全部时数据里面的值为空字符串和无的情况
@@ -325,9 +326,9 @@ export default {
 
     async select() {
       var data = JSON.stringify(this.searchForm)
-      var res= await SelectUser(data)
+      var res = await SelectUser(data)
       console.log(res);
-      this.notificationList=res.data
+      this.notificationList = res.data
     },
     detail() {
 
@@ -345,11 +346,11 @@ export default {
       this.dialogVisible = false
     },
     reset() {
-      this.searchForm.username=""
-      this.searchForm.phonenumber=""
-      this.searchForm.projectid=null
-      this.searchForm.status=null
-      this.searchForm.email=""
+      this.searchForm.username = ""
+      this.searchForm.phonenumber = ""
+      this.searchForm.projectid = null
+      this.searchForm.status = null
+      this.searchForm.email = ""
     },
     authorization() {
       //授权码
@@ -362,15 +363,15 @@ export default {
       this.currentPage = currentPage;
     },
   },
-  async created(){
+  async created() {
     //未完成：判断当前账号是不是hw账号再进行请求
-    const users=await ListUsers()
+    const users = await ListUsers()
     console.log(users);
-    this.notificationList=users.data
-    const projects=await ListAllProject()
+    this.notificationList = users.data
+    const projects = await ListAllProject()
     console.log(projects);
-    this.projectoptions=projects.data
-    
+    this.projectoptions = projects.data
+
   }
 };
 </script>

@@ -4,7 +4,7 @@
       <p>组织管理</p>
       <p class="secondtext">组织列表及配置</p>
     </div>
-    <el-dialog title="添加组织" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="添加组织" :visible.sync="add_orgnization_page" width="30%" :before-close="handleClose">
       <div>
         <el-form :model="organizationForm" label-width="80px" :rules="rules">
           <el-row :gutter="15">
@@ -17,42 +17,107 @@
 
           <el-row :gutter="15">
             <el-col :span="400">
-              <el-form-item label="联系人" >
-                <el-input v-model="organizationForm.cp" placeholder="请输入内容" class="long"></el-input>
+              <el-form-item label="联系人">
+                <el-input v-model="organizationForm.contact" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row :gutter="15">
             <el-col :span="400">
-              <el-form-item label="联系方式" >
-                <el-input v-model="organizationForm.ci" placeholder="请输入内容" class="long"></el-input>
+              <el-form-item label="联系方式">
+                <el-input v-model="organizationForm.phonenumber" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row :gutter="15">
             <el-col :span="400">
-              <el-form-item label="地址" prop="addres">
-                <el-input v-model="organizationForm.addres" placeholder="请在地图上定位设备地" class="long"></el-input>
+              <el-form-item label="地址" prop="locate">
+                <el-input v-model="organizationForm.locate" placeholder="请在地图上定位设备地" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row :gutter="15">
             <el-col :span="400">
-              <el-form-item label="组织人数" prop="num">
-                <el-input v-model="organizationForm.num" placeholder="请输入内容" class="long"></el-input>
+              <el-form-item label="备注">
+                <el-input v-model="organizationForm.remark" placeholder="请输入内容" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="标识" prop="characteristic">
+                <el-input v-model="organizationForm.characteristic" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </el-form>
 
+
+
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="finish">完成</el-button>
+        <el-button @click="add_orgnization_page = false">取消</el-button>
+        <el-button type="primary" @click="next">下一步</el-button>
       </span>
+    </el-dialog>
+
+    <!-- 创建账户 -->
+    <el-dialog title="创建组织管理员账户" :visible.sync="add_user_page" width="30%" :before-close="handleClose">
+      <div>
+        <div>
+          <el-form :model="userForm" label-width="80px" :rules="rules">
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="账户名" prop="username">
+                  <el-input v-model="userForm.username" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="密码" prop="password">
+                  <el-input v-model="userForm.password" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="姓名">
+                  <el-input v-model="userForm.name" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="手机号" prop="phonenumber">
+                  <el-input v-model="userForm.phonenumber" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row :gutter="15">
+              <el-col :span="400">
+                <el-form-item label="邮箱地址">
+                  <el-input v-model="userForm.email" placeholder="请输入" class="long"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="add_user_page = false">取消</el-button>
+          <el-button type="primary" @click="retreat">上一步</el-button>
+          <el-button type="primary" @click="finish">完成</el-button>
+        </span>
+      </div>
+
     </el-dialog>
     <!-- 顶部盒子 -->
     <div class="bigbox">
@@ -73,17 +138,17 @@
             </el-col>
           </el-row>
           <el-row :gutter="10">
-            
+
             <el-col :span="12">
               <el-form-item>
                 <el-button type="primary" @click="search">查询</el-button>
-                <el-button type="primary" @click="reset">重置</el-button>
-                <el-button type="primary" @click="add">新建</el-button>
-                
+                <el-button @click="reset">重置</el-button>
+                <el-button type="primary" @click="add" class="left">新建</el-button>
+
               </el-form-item>
-              
+
             </el-col>
-            
+
           </el-row>
         </el-form>
       </div>
@@ -122,30 +187,70 @@
 </template>
 
 <script>
-import {ListAllOrgnization,ListUsersByOrgnizationId,SelectOrgnization} from "@/utils/api/Mocha_itom/Organization"
+import { ListAllOrgnization, ListUsersByOrgnizationId, SelectOrgnization, AddOrganization } from "@/utils/api/Mocha_itom/Organization"
+import { CheckUserName} from "@/utils/api/Advanced_setting/ProjectManage"
 
 export default {
   data() {
+    var checkusername =
+      async (rule, value, callback) => {
+        if (value === "") {
+          callback(new Error("请输入项目ID"));
+          return
+        } else {
+          const res = await CheckUserName(value)
+          if (res.code == 200) {
+            if (res.data == true) {
+              callback()
+              return
+            } else {
+              callback(new Error("该账户名已存在"));
+            }
+          } else {
+            callback(new Error("Network Error"));
+          }
+        }
+      };
     return {
-      dialogVisible:false,
-      organizationForm:{
-        name :"",
-        cp :"",
-        ci :"",
-        addres :"",
-        num :"",
+      add_orgnization_page: false,
+      add_user_page: false,
+      organizationForm: {
+        name: "",
+        contact: "",
+        phonenumber: "",
+        locate: "",
+        remark: "",
+        characteristic: ""
+      },
+      userForm: {
+        "username": "",
+        "password": "",
+        "name": "",
+        "phonenumber": "",
+        "email": ""
       },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        addres: [
-          {required: true}
+        locate: [
+          { required: true }
         ],
-        num: [
-          {required: true}
+        username: [
+          { validator: checkusername, trigger: 'blur' },
+          { required: true, message: '请输入账户名', trigger: 'blur' },
+
         ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        phonenumber: [
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+
       },
       searchForm: {
         name: "",
@@ -158,44 +263,71 @@ export default {
     };
   },
   methods: {
-    finish() {
+    async finish() {
       //处理添加逻辑
       console.log(this.organizationForm);
+      console.log(this.userForm);
+      var data = JSON.stringify({
+        "organization": this.organizationForm,
+        "user": this.userForm
+      })
+      var res = await AddOrganization(data)
+      if (res.code == 200) {
+        this.$message({
+          type: 'success',
+          message: '添加成功'
+        });
+      } else {
+        this.$message({
+          type: 'error',
+          message: '添加失败'
+        });
+      }
+      console.log(res);
 
-      this.dialogVisible = false;
+      this.add_user_page = false;
 
     },
-    async search(){
-      var res= await SelectOrgnization(this.searchForm.name,this.searchForm.phone)
-      if(res.code==200){
-        this.notificationList=res.data
+    next() {
+      this.add_orgnization_page = false;
+      this.add_user_page = true
+    },
+    retreat() {
+      this.add_user_page = false
+      this.add_orgnization_page = true
+    },
+    async search() {
+      var res = await SelectOrgnization(this.searchForm.name, this.searchForm.phone)
+      if (res.code == 200) {
+        this.notificationList = res.data
       }
       console.log(res);
     },
-    reset(){
-
+    reset() {
+      this.searchForm.name = ""
+      this.searchForm.phone = ""
     },
     add() {
       // 添加逻辑
-      this.dialogVisible=true
+      this.add_orgnization_page = true
     },
     authorization(row) {
       //授权码
       // console.log(row);
-      var orgnizationid=row.orgnization.id
+      var orgnizationid = row.orgnization.id
       // 请求获取组织的详细信息
     },
     async userlist(row) {
       //用户列表
       // console.log(row);
-      var orgnizationid=row.orgnization.id
+      var orgnizationid = row.orgnization.id
       // 请求获取组织的详细信息
-      var res= await ListUsersByOrgnizationId(orgnizationid)
-      if(res.code==200){
+      var res = await ListUsersByOrgnizationId(orgnizationid)
+      if (res.code == 200) {
         // this.notificationList=res.data
       }
       console.log(res)
-      
+
 
     },
     handleClose(done) {
@@ -205,8 +337,8 @@ export default {
         })
         .catch(_ => { });
     },
-    handleDetail(row) { 
-      var organizationid=row.orgnization.id
+    handleDetail(row) {
+      var organizationid = row.orgnization.id
       console.log(organizationid);
       //请求获取组织的详细信息
     },
@@ -214,13 +346,13 @@ export default {
       this.currentPage = currentPage;
     },
   },
-  async created(){
-    var res=await ListAllOrgnization()
-    if(res.code==200){
-      this.notificationList=res.data
+  async created() {
+    var res = await ListAllOrgnization()
+    if (res.code == 200) {
+      this.notificationList = res.data
     }
     console.log(res);
-    
+
   }
 };
 </script>
@@ -296,8 +428,13 @@ export default {
       margin-top: 5px;
     }
   }
+
   .long {
     width: 350px;
+  }
+
+  .left {
+    margin-left: 80px;
   }
 }
 </style>
