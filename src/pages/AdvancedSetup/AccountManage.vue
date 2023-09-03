@@ -81,7 +81,7 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="8">
+              <el-col v-if="isHW" :span="8">
                 <el-form-item label="选择项目" class="select">
                   <el-select v-model="searchForm.projectid" placeholder="选择项目">
                     <el-option v-for="option in projectoptions" :key="option.id" :label="option.projectName"
@@ -167,7 +167,7 @@
 import Select from '@/components/Select.vue'
 
 import { ListUsers, ListAllProject, SelectUser } from "@/utils/api/Advanced_setting/AccountManage"
-
+import { useUserStore } from "@/stores/user"
 export default {
 
   components: {
@@ -302,6 +302,7 @@ export default {
       pageSize: 10,
       total: 100,
       dialogVisible: false,
+      isHW: false,
 
     };
   },
@@ -368,9 +369,17 @@ export default {
     const users = await ListUsers()
     console.log(users);
     this.notificationList = users.data
-    const projects = await ListAllProject()
-    console.log(projects);
-    this.projectoptions = projects.data
+    var userStore = useUserStore()
+    if (userStore.userrole == "ROLE_HW") {
+      this.isHW = true
+      const projects = await ListAllProject()
+      if (projects.code == 200) {
+        this.projectoptions = projects.data
+      }
+      console.log(projects);
+
+    }
+
 
   }
 };

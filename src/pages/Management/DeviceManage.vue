@@ -19,17 +19,25 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="名称" prop="name">
-                <el-input v-model="deviceForm.name" placeholder="请输入内容" class="long"></el-input>
+                <el-input v-model="deviceForm.device_name" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row :gutter="15">
             <el-col :span="400">
+              <el-form-item label="地址" prop="name">
+                <el-input v-model="deviceForm.locate" placeholder="请输入内容" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15" v-if="!isOA">
+            <el-col :span="400">
               <el-form-item label="选择组织" class="select" prop="organizationid">
-                <el-select v-model="deviceForm.organizationid" placeholder="选择项目" class="long">
-                  <el-option v-for="option in projectOptions" :key="option.value" :label="option.label"
-                    :value="option.value"></el-option>
+                <el-select v-model="deviceForm.organizationid" placeholder="选择组织" class="long">
+                  <el-option v-for="option in orgnizationOptions" :key="option.orgnization.id"
+                    :label="option.orgnization.name" :value="option.orgnization.id"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -44,7 +52,7 @@
     </el-dialog>
 
     <!-- adds -->
-    <el-dialog title="添加设备" :visible.sync="addsVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="批量添加设备" :visible.sync="addsVisible" width="30%" :before-close="handleClose">
       <div>
         <el-steps :active="active" finish-status="success">
           <el-step title="步骤 1" @click.native="on_click(0)"></el-step>
@@ -61,7 +69,7 @@
           第三步：导入设备
         </div>
 
-        
+
 
       </div>
       <span slot="footer" class="dialog-footer">
@@ -81,39 +89,43 @@
           <el-row :gutter="15">
             <el-col :span="6">
               <el-form-item label="SN码">
-                <el-input v-model="searchForm.deviceName" placeholder="请输入设备名称"></el-input>
+                <el-input v-model="searchForm.sn" placeholder="请输入设备名称"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item label="组织">
-                <el-select v-model="searchForm.organization" placeholder="请选择提醒类型">
-                  <el-option v-for="option in projectOptions" :key="option.value" :label="option.label"
-                    :value="option.value"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
+            <div v-if="!isOA">
+              <el-col :span="6">
+                <el-form-item label="组织">
+                  <el-select v-model="searchForm.organizationid" placeholder="请选择提醒类型">
+                    <el-option v-for="option in orgnizationOptions" :key="option.orgnization.id"
+                      :label="option.orgnization.name" :value="option.orgnization.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </div>
+
             <el-col :span="6">
               <el-form-item label="属性">
                 <el-select v-model="searchForm.attribute" placeholder="请选择">
-                  <el-option label="初始" value="初始"></el-option>
-                  <el-option label="未激活" value="未激活"></el-option>
-                  <el-option label="已激活" value="已激活"></el-option>
+                  <el-option label="初始" :value=2></el-option>
+                  <el-option label="未激活" :value=0></el-option>
+                  <el-option label="已激活" :value=1></el-option>
 
-                  <el-option label="全部" value="全部"></el-option>
+                  <el-option label="全部" :value=null></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="状态">
-                <el-select v-model="searchForm.state" placeholder="请选择">
-                  <el-option label="在线" value="在线"></el-option>
-                  <el-option label="离线" value="离线"></el-option>
+                <el-select v-model="searchForm.status" placeholder="请选择">
+                  <el-option label="在线" :value=1></el-option>
+                  <el-option label="离线" :value=0></el-option>
+                  <el-option label="全部" :value=null></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="名称">
-                <el-input v-model="searchForm.devicename" placeholder="请输入"></el-input>
+                <el-input v-model="searchForm.name" placeholder="请输入"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -122,8 +134,8 @@
               <el-form-item>
                 <el-button type="primary" @click="handleSearch">查询</el-button>
                 <el-button @click="handleReset">重置</el-button>
-                <el-button type="primary" @click="adddevice">添加设备</el-button>
-                <el-button type="primary" @click="batchadd">批量添加</el-button>
+                <el-button v-if="!isHW" type="primary" @click="adddevice">添加设备</el-button>
+                <el-button v-if="!isHW" type="primary" @click="batchadd">批量添加</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -138,14 +150,25 @@
 
         }">
           <el-table-column type="selection" width="65"></el-table-column>
-          <el-table-column prop="deviceSN" label="SN码" width="150"></el-table-column>
-          <el-table-column prop="name" label="名称" width="120"></el-table-column>
-          <el-table-column prop="attribute" label="属性" width="90"></el-table-column>
-          <el-table-column prop="state" label="状态" width="90"></el-table-column>
-          <el-table-column prop="organization" label="组织" width="233"></el-table-column>
-          <el-table-column prop="useNumber" label="使用次数" width="100"></el-table-column>
-          <el-table-column prop="useTime" label="使用时长(秒)" width="120"></el-table-column>
-          <el-table-column prop="expectedTime" label="预计次数" width="100"></el-table-column>
+          <el-table-column prop="device.sn" label="SN码" width="150"></el-table-column>
+          <el-table-column prop="device.deviceName" label="名称" width="120"></el-table-column>
+          <el-table-column prop="device.attribute" label="属性" width="90">
+            <template slot-scope="scope">
+              <span v-if="scope.row.device.attribute === 0">已激活</span>
+              <span v-else-if="scope.row.device.attribute === 1">未激活</span>
+              <span v-else-if="scope.row.device.attribute === 2">初始</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="device.status" label="状态" width="90">
+            <template slot-scope="scope">
+              <span v-if="scope.row.device.status === 0">离线</span>
+              <span v-else-if="scope.row.device.status === 1">在线</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="orgnizationname" label="组织" width="233"></el-table-column>
+          <el-table-column prop="device.cout" label="使用次数" width="100"></el-table-column>
+          <el-table-column prop="device.duration" label="使用时长(秒)" width="120"></el-table-column>
+          <el-table-column prop="device.cout" label="预计次数" width="100"></el-table-column>
 
           <el-table-column label="其他" width="200px">
             <template slot-scope="scope">
@@ -165,25 +188,26 @@
 </template>
 
 <script>
-import {ListAllOrgnization} from "@/utils/api/Mocha_itom/DeviceManage"
-import {ListDevice} from "@/utils/api/Mocha_itom/DeviceManage"
+import { ListAllOrgnization, SelectDevice, ListDevice, AddDevice } from "@/utils/api/Mocha_itom/DeviceManage"
+import { useUserStore } from "@/stores/user"
 export default {
   data() {
     return {
       active: 0,
       searchForm: {
-        deviceName: "",
-        organization: "",
-        attribute: "",
-        state: "",
-        devicename: ""
+        sn: null,
+        organizationid: null,
+        attribute: null,
+        status: null,
+        name: null,
 
 
       },
       deviceForm: {
         SN: "",
-        organizationid: "",
-        name: "",
+        organizationid: null,
+        device_name: "",
+        locate: "",
       },
 
       rules: {
@@ -198,77 +222,108 @@ export default {
           { required: true }
         ],
       },
-      projectOptions: [ // 选项数组
-        {
-          label: '海威东南区域总代1',
-          value: '海威东南区域总代1'
-        },
-        {
-          label: '海威西南地区总代2',
-          value: '海威西南地区总代2'
-        }
-        // 添加更多选项...
-      ],
+      orgnizationOptions: [],
       notificationList: [
         {
-          deviceSN: "HV-UIAZ738P007",
-          name: "1号楼",
-          attribute: "已激活",
-          state: "在线",
-          organization: "桂林市人民医院",
-          useNumber: "200",
-          useTime: "1000",
-          expectedTime: "12",
+          device: {
+            "id": 1,
+            "deviceName": "设备1",
+            "locate": "locate1",
+            "status": 1,
+            "duration": 0,
+            "cout": 0,
+            "temperature": 0,
+            "uv": 0,
+            "mode": 0,
+            "sn": 1,
+            "attribute": 1
+
+          },
+          orgnizationname: "组织"
         },
         {
-          deviceSN: "HV-UIAZ738P007",
-          name: "1号楼",
-          attribute: "已激活",
-          state: "在线",
-          organization: "桂林市人民医院",
-          useNumber: "200",
-          useTime: "1000",
-          expectedTime: "12",
+          device: {
+            "id": 1,
+            "deviceName": "设备1",
+            "locate": "locate1",
+            "status": 1,
+            "duration": 0,
+            "cout": 0,
+            "temperature": 0,
+            "uv": 0,
+            "mode": 0,
+            "sn": 1,
+            "attribute": 1
+
+          },
+          orgnizationname: "组织"
         },
         {
-          deviceSN: "HV-UIAZ738P007",
-          name: "1号楼",
-          attribute: "已激活",
-          state: "在线",
-          organization: "桂林市人民医院",
-          useNumber: "200",
-          useTime: "1000",
-          expectedTime: "12",
+          device: {
+            "id": 1,
+            "deviceName": "设备1",
+            "locate": "locate1",
+            "status": 1,
+            "duration": 0,
+            "cout": 0,
+            "temperature": 0,
+            "uv": 0,
+            "mode": 0,
+            "sn": 1,
+            "attribute": 1
+          },
+          orgnizationname: "组织"
         },
         {
-          deviceSN: "HV-UIAZ738P007",
-          name: "1号楼",
-          attribute: "已激活",
-          state: "在线",
-          organization: "桂林市人民医院",
-          useNumber: "200",
-          useTime: "1000",
-          expectedTime: "12",
+          device: {
+            "id": 1,
+            "deviceName": "设备1",
+            "locate": "locate1",
+            "status": 1,
+            "duration": 0,
+            "cout": 0,
+            "temperature": 0,
+            "uv": 0,
+            "mode": 0,
+            "sn": 1,
+            "attribute": 1
+
+          },
+          orgnizationname: "组织"
         },
         {
-          deviceSN: "HV-UIAZ738P007",
-          name: "1号楼",
-          attribute: "已激活",
-          state: "在线",
-          organization: "桂林市人民医院",
-          useNumber: "200",
-          useTime: "1000",
-          expectedTime: "12",
+          device: {
+            "id": 1,
+            "deviceName": "设备1",
+            "locate": "locate1",
+            "status": 1,
+            "duration": 0,
+            "cout": 0,
+            "temperature": 0,
+            "uv": 0,
+            "mode": 0,
+            "sn": 1,
+            "attribute": 1
+
+          },
+          orgnizationname: "组织"
         },
         {
-          deviceSN: "HV-UIAZ738P007",
-          name: "1号楼",
-          attribute: "已激活",
-          state: "在线",
-          organization: "桂林市人民医院",
-          useNumber: "200",
-          useTime: "1000",
-          expectedTime: "12",
+          device: {
+            "id": 1,
+            "deviceName": "设备1",
+            "locate": "locate1",
+            "status": 1,
+            "duration": 0,
+            "cout": 0,
+            "temperature": 0,
+            "uv": 0,
+            "mode": 0,
+            "sn": 1,
+            "attribute": 1
+
+          },
+          orgnizationname: "组织"
         },
       ],
       currentPage: 1,
@@ -276,10 +331,12 @@ export default {
       total: 100,
       addVisible: false,
       addsVisible: false,
+      isHW: false,
+      isOA: false
     };
   },
   methods: {
-    previous(){
+    previous() {
       console.log(this.active)
       if (this.active-- < 2) {
         this.active = 0;
@@ -303,9 +360,15 @@ export default {
         })
         .catch(_ => { });
     },
-    
-    addfinish() {
+
+    async addfinish() {
       //处理添加逻辑
+      var data = JSON.stringify(this.deviceForm)
+      var res = await AddDevice(data)
+      if (res.code == 200) {
+        this.$message.success("添加成功");
+      }
+      console.log(res);
       this.addVisible = false;
 
     },
@@ -317,10 +380,23 @@ export default {
       this.addsVisible = false;
 
     },
-    handleSearch() {
+    async handleSearch() {
       // 处理搜索逻辑
+      var data = JSON.stringify(this.searchForm)
+      var res = await SelectDevice(data)
+      if (res.code == 200) {
+        this.notificationList = res.data
+      }
+      console.log(data);
+      console.log(res);
+
     },
     handleReset() {
+      this.searchForm.attribute = null
+      this.searchForm.name = null
+      this.searchForm.sn = null
+      this.searchForm.organizationid = null
+      this.searchForm.status = null
       // 处理重置逻辑
     },
     adddevice() {
@@ -337,7 +413,47 @@ export default {
       this.currentPage = currentPage;
     },
   },
-  
+  async created() {
+    var res = await ListDevice()
+    if (res.code == 200) {
+      this.notificationList = res.data
+    }
+
+    console.log(res);
+    var userStore = useUserStore()
+    var role = userStore.userrole
+    console.log(role);
+    if (role === "ROLE_HW") {
+      this.isHW = true
+      this.isOA = false
+      var res = await ListAllOrgnization()
+      if (res.code == 200) {
+        this.orgnizationOptions = res.data
+
+      }
+
+      console.log(res);
+      return
+    } else if (role === "ROLE_OA") {
+      this.isHW = false
+      this.isOA = true
+      this.deviceForm.organizationid = this.notificationList[0].orgnizationid
+
+      return
+    } else if (role === "ROLE_PA") {
+      var res = await ListAllOrgnization()
+      this.isHW = false
+      this.isOA = false
+      if (res.code == 200) {
+        this.orgnizationOptions = res.data
+      }
+      console.log(res);
+      return
+    }
+    return
+
+  }
+
 };
 </script>
 
@@ -414,7 +530,7 @@ export default {
     }
 
   }
-  
+
 
   .long {
     width: 350px;

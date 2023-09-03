@@ -153,6 +153,8 @@ export default {
       } else if (res.code == 20011) {
         this.$message.success("登录成功");
         userStore.updateUserInfo(res.data)
+        var userrole=userStore.setRole()
+        
         this.$router.push("/home/control");
       }
 
