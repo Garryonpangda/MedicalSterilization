@@ -21,8 +21,39 @@ export const ListRoles = function() {
     })
 }
 
-export const ListRilesByProjectid = function(projectid) {
+export const ListRolesByProjectid = function(projectid) {
     return request.get('/advanced_setting/ListRilesByProjectid', {
         params: { projectid }
+    })
+}
+
+export const ListAllMenus = function() {
+    return request.get('/advanced_setting/ListAllMenus', {
+        params: {}
+    })
+}
+
+export const AddRole = function(data) {
+    return request.post('/advanced_setting/AddRole', data, {
+        headers: {
+            'content-type': 'application/json'
+        }
+    });
+
+}
+
+export const UpdateRole = function(data) {
+    return request.post('/advanced_setting/UpdateRole', data, {
+        headers: {
+            'content-type': 'application/json'
+        }
+    });
+
+}
+
+
+export const ListMenusByRoleid = function(roleid) {
+    return request.get('/advanced_setting/ListMenusByRoleid', {
+        params: { roleid }
     })
 }
