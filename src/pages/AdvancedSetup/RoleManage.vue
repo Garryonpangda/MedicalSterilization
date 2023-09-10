@@ -219,7 +219,7 @@
 </template>
 
 <script>
-import { ListAllProject, ListRoles, ListRolesByProjectid, ListAllMenus, AddRole, ListMenusByRoleid,UpdateRole } from "@/utils/api/Advanced_setting/RoleManage"
+import { ListAllProject, ListRoles, ListRolesByProjectid, ListAllMenus, AddRole, ListMenusByRoleid, UpdateRole } from "@/utils/api/Advanced_setting/RoleManage"
 import { ListAllOrgnization } from '@/utils/api/Mocha_itom/Organization'
 import { useUserStore } from "@/stores/user"
 export default {
@@ -302,6 +302,8 @@ export default {
       var res = AddRole(data)
       if (res.code == 200) {
         this.$message.success("添加成功");
+      } else {
+        this.$message.error("添加失败");
       }
       console.log(res);
       this.secondpage = false
@@ -326,17 +328,17 @@ export default {
         'role': {
           'roleName': this.edit_roleForm.rolename,
           'remark': this.edit_roleForm.remark,
-          'delFlag':this.edit_roleForm.delFlag,
-          'createTime':this.edit_roleForm.createTime,
-          'updateTime':this.edit_roleForm.updateTime,
-          'id':this.edit_roleForm.id
+          'delFlag': this.edit_roleForm.delFlag,
+          'createTime': this.edit_roleForm.createTime,
+          'updateTime': this.edit_roleForm.updateTime,
+          'id': this.edit_roleForm.id
         },
         "authorities": this.edit_auForm.authorities,
         "quantity": this.edit_roleForm.quantity,
       })
-      
-      var res=await UpdateRole(data)
-      if(res.code==200){
+
+      var res = await UpdateRole(data)
+      if (res.code == 200) {
         this.$message.success("修改成功");
       }
       console.log(res);
@@ -355,19 +357,19 @@ export default {
       this.firstpage = true
     },
     async edit(row) {
-      
+
       var current_role = row.role
       this.edit_roleForm.rolename = current_role.roleName
       this.edit_roleForm.quantity = row.max
       this.edit_roleForm.remark = current_role.remark
-      this.edit_roleForm.delFlag=current_role.delFlag
-      this.edit_roleForm.createTime=current_role.createTime
-      this.edit_roleForm.updateTime=current_role.updateTime
-      this.edit_roleForm.id=current_role.id
+      this.edit_roleForm.delFlag = current_role.delFlag
+      this.edit_roleForm.createTime = current_role.createTime
+      this.edit_roleForm.updateTime = current_role.updateTime
+      this.edit_roleForm.id = current_role.id
 
       var res = await ListMenusByRoleid(row.role.id)
       if (res.code == 200) {
-        this.edit_auForm.authorities=[]
+        this.edit_auForm.authorities = []
         for (var i = 0; i < res.data.length; i++) {
           this.edit_auForm.authorities.push(res.data[i].id)
         }

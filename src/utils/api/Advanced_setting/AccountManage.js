@@ -23,3 +23,20 @@ export const SelectUser = function(data) {
     });
 
 }
+
+
+export const AddProjectUser = function(data) {
+    return request.post('/advanced_setting/AddProjectUser', data, {
+        headers: {
+            'content-type': 'application/json'
+        }
+    });
+
+}
+
+
+export const ListRolesByUserid = function(roleid) {
+    return request.get('/advanced_setting/ListRolesByUserid', {
+        params: { roleid }
+    })
+}

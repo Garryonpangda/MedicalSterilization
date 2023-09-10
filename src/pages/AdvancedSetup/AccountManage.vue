@@ -5,7 +5,9 @@
       <p class="secondtext">管理项目中所有账号</p>
 
     </div>
-    <el-dialog title="添加账号" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+
+    <!-- 添加账号 -->
+    <el-dialog title="添加账号" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
       <div>
         <el-form :model="acForm" label-width="80px" :rules="rules">
           <el-row :gutter="15">
@@ -19,17 +21,25 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="登陆密码" prop="pwd">
-                <el-input v-model="acForm.pwd" placeholder="请填写登录密码" class="long"></el-input>
+                <el-input v-model="acForm.password" placeholder="请填写登录密码" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row :gutter="15">
             <el-col :span="400">
-              <el-form-item label="角色选择" prop="role">
-                <div class="long">
-                  <Select :options="options" @selected="selected" />
-                </div>
+              <el-form-item v-if="roleoptions != null" label="角色选择">
+
+                <!-- <Select :options="options" @selected="selected" /> -->
+
+
+                <el-transfer :titles="['角色未拥有权限', '角色已拥有权限']" v-model="acForm.role" :props="{
+                  key: 'id',
+                  label: 'remark'
+                }" :data="formattedAumenus">
+                </el-transfer>
+
+
 
 
               </el-form-item>
@@ -67,6 +77,79 @@
         <el-button type="primary" @click="finish">完成</el-button>
       </span>
     </el-dialog>
+
+    <!-- 编辑账号 -->
+    <el-dialog title="编辑" :visible.sync="editpage" width="40%" :before-close="handleClose">
+      <div>
+        <el-form :model="editForm" label-width="80px" :rules="rules">
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="账户名" prop="username">
+                <el-input v-model="editForm.username" placeholder="请填写账户名" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="登陆密码" prop="pwd">
+                <el-input v-model="editForm.password" placeholder="请填写登录密码" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item :titles="['角色未拥有权限', '角色已拥有权限']" v-if="roleoptions != null" label="角色选择">
+
+                <!-- <Select :options="options" @selected="selected" /> -->
+
+
+                <el-transfer v-model="editForm.role" :props="{
+                  key: 'id',
+                  label: 'remark'
+                }" :data="formattedAumenus">
+                </el-transfer>
+
+
+
+
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="姓名">
+                <el-input v-model="editForm.name" placeholder="请填写姓名" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="手机号" prop="phone">
+                <el-input v-model="editForm.phone" placeholder="请填写手机号" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="15">
+            <el-col :span="400">
+              <el-form-item label="邮箱地址">
+                <el-input v-model="editForm.email" placeholder="请填写邮箱地址" class="long"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editpage = false">取消</el-button>
+        <el-button type="primary" @click="edit_finish">完成</el-button>
+      </span>
+    </el-dialog>
+
     <!-- 顶部盒子 -->
     <transition name="slide">
       <div class="bigbox">
@@ -138,7 +221,7 @@
             <el-table-column prop="username" label="登录账号名" width="150"></el-table-column>
             <el-table-column prop="phonenumber" label="手机号" width="100"></el-table-column>
             <el-table-column prop="email" label="邮箱" width="150"></el-table-column>
-            <el-table-column prop="roles" label="角色" width="100"></el-table-column>
+            <el-table-column prop="remark" label="角色" width="100"></el-table-column>
 
             <el-table-column prop="updateTime" label="上次登录时间" width="120"></el-table-column>
 
@@ -146,7 +229,7 @@
 
             <el-table-column label="操作" width="250px">
               <template slot-scope="scope">
-                <el-button @click="edit" type="text" size="small">编辑</el-button>
+                <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
                 <el-button @click="detail" type="text" size="small">详情</el-button>
               </template>
             </el-table-column>
@@ -166,7 +249,8 @@
 <script>
 import Select from '@/components/Select.vue'
 
-import { ListUsers, ListAllProject, SelectUser } from "@/utils/api/Advanced_setting/AccountManage"
+import { ListUsers, ListAllProject, SelectUser, AddProjectUser ,ListRolesByUserid} from "@/utils/api/Advanced_setting/AccountManage"
+import { ListRoles } from "@/utils/api/Advanced_setting/RoleManage"
 import { useUserStore } from "@/stores/user"
 export default {
 
@@ -175,37 +259,20 @@ export default {
   },
   data() {
     return {
-      options: [
-        {
-          value: '001',
-          label: '黄金糕',
-          check: false
-        },
-        {
-          value: '002',
-          label: '双皮奶',
-          check: false
-        },
-        {
-          value: '003',
-          label: '蚵仔煎',
-          check: false
-        },
-        {
-          value: '004',
-          label: '龙须面',
-          check: false
-        },
-        {
-          value: '005',
-          label: '北京烤鸭',
-          check: false
-        }
-      ],
+
+      roleoptions: [],
+      editForm: {
+        username: "",
+        password: "",
+        role: [],
+        name: "",
+        phone: "",
+        email: "",
+       },
       acForm: {
         username: "",
-        pwd: "",
-        role: null,
+        password: "",
+        role: [],
         name: "",
         phone: "",
         email: "",
@@ -236,75 +303,25 @@ export default {
         email: ""
       },
       projectoptions: [],
-      notificationList: [
-        {
-          name: "lin",
-          username: "123456789",
-          phone: "123456780",
-          email: "123456789",
-          role: "管理员",
-          lasttime: "2021/9/9 18:00",
-          acstate: "关闭"
-
-        },
-        {
-          name: "lin",
-          username: "123456789",
-          phone: "123456780",
-          email: "123456789",
-          role: "管理员",
-          lasttime: "2021/9/9 18:00",
-          acstate: "关闭"
-
-        },
-        {
-          name: "lin",
-          username: "123456789",
-          phone: "123456780",
-          email: "123456789",
-          role: "管理员",
-          lasttime: "2021/9/9 18:00",
-          acstate: "关闭"
-
-        },
-        {
-          name: "lin",
-          username: "123456789",
-          phone: "123456780",
-          email: "123456789",
-          role: "管理员",
-          lasttime: "2021/9/9 18:00",
-          acstate: "关闭"
-
-        },
-        {
-          name: "lin",
-          username: "123456789",
-          phone: "123456780",
-          email: "123456789",
-          role: "管理员",
-          lasttime: "2021/9/9 18:00",
-          acstate: "关闭"
-
-        },
-        {
-          name: "lin",
-          username: "123456789",
-          phone: "123456780",
-          email: "123456789",
-          role: "管理员",
-          lasttime: "2021/9/9 18:00",
-          acstate: "关闭"
-
-        },
-      ],
+      notificationList: [],
       currentPage: 1,
       pageSize: 10,
       total: 100,
       dialogVisible: false,
+      editpage: false,
       isHW: false,
 
     };
+  },
+  computed: {
+    formattedAumenus() {
+      return this.roleoptions.map(item => {
+        return {
+          ...item.role,
+          disabled: item.role.disabled === 0 || !(item.current < item.max) ? true : false
+        };
+      });
+    }
   },
   methods: {
     selected(value) {
@@ -334,17 +351,63 @@ export default {
     detail() {
 
     },
-    edit() {
+    async edit(row) {
+      var roleid=row.id
+      console.log(row);
+      this.editForm.username=row.username
+      this.editForm.password=row.password
+      this.editForm.name=row.name
+      this.editForm.phone=row.phonenumber
+      this.editForm.email=row.email
+      var res= await ListRolesByUserid(roleid)
+      if(res.code==200){
+        var roles=res.data
+        console.log(roles);
+        for(var i=0 ;i<roles.length;i++){
+          this.editForm.role.push(roles[i].id)
+        }
+        
+      }
+      console.log(res);
 
+      // this.editForm.role=row.username
+      this.editpage = true
     },
-    add() {
+    async add() {
       // 添加逻辑
       this.dialogVisible = true
 
+      // var res = await ListRoles()
+      // if (res.code == 200) {
+
+      // }
+      // console.log(res);
+
     },
-    finish() {
+    async finish() {
       console.log(this.acForm)
+      var data = JSON.stringify({
+        'user': {
+          "username": this.acForm.username,
+          "password": this.acForm.password,
+          "name": this.acForm.name,
+          "phonenumber": this.acForm.phone,
+          "email": this.acForm.email
+        },
+        "roleid": this.acForm.role,
+      })
+      console.log(data);
+      var res = await AddProjectUser(data)
+      if (res.code == 200) {
+        this.$message.success("添加成功");
+      } else {
+        this.$message.error("添加失败");
+      }
+      console.log(res);
       this.dialogVisible = false
+    },
+    edit_finish() {
+
     },
     reset() {
       this.searchForm.username = ""
@@ -369,6 +432,13 @@ export default {
     const users = await ListUsers()
     console.log(users);
     this.notificationList = users.data
+    var res = await ListRoles()
+    if (res.code == 200) {
+      this.roleoptions = res.data
+      console.log("formattedAumenus:");
+      console.log(this.formattedAumenus);
+    }
+    console.log(res);
     var userStore = useUserStore()
     if (userStore.userrole == "ROLE_HW") {
       this.isHW = true
@@ -475,6 +545,10 @@ export default {
 
   .long {
     width: 350px;
+  }
+
+  .bigtype {
+    font-size: 17px;
   }
 
 }

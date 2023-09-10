@@ -16,10 +16,11 @@
         class="multiple"
         :value=item.value
         :label=item.label
+        
         v-for="(item, key) in optionsData"
         :key=key
       >
-        <el-checkbox v-model="item.check" @change="handleTaskItemChange(item)">
+        <el-checkbox v-model="item.check" :disabled="item.disabled" @change="handleTaskItemChange(item) ">
           {{ item.label }}
         </el-checkbox>
       </el-option>
