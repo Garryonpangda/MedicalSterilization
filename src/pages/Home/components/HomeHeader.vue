@@ -23,7 +23,7 @@
     <div class="info flex">
       <div>{{ timeStr }}</div>
       <div class="vertical_line"></div>
-      <div>欢迎 {{ "admin" }}</div>
+      <div>欢迎 {{ username }}</div>
       <div class="vertical_line"></div>
       <el-button type="text" icon="el-icon-switch-button" size="medium" style="margin-right: 10px; color: aliceblue"
         @click="loginOut">退出</el-button>
@@ -41,10 +41,14 @@ export default {
     return {
       isCollapse: false,
       breadList: [],
+      username:""
     };
   },
   created() {
     this.getBreadcrumb();
+    const userStore = useUserStore()
+    this.username=userStore.userInfo.name
+    
   },
   watch: {
     $route() {
@@ -84,6 +88,7 @@ export default {
 
     }
   },
+
 };
 </script>
 
