@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css'
 
 // axios.defaults.withCredentials = true
 const request = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://101.34.248.186:8085',
     // credentials: true,
     withCredentials: true,
 
