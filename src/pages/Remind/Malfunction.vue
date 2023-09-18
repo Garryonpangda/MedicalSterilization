@@ -209,7 +209,6 @@ export default {
 <style scoped lang="scss">
 .home_page {
   height: 250vh;
-
   .bigtitle {
     width: 100%;
     height: 97px;

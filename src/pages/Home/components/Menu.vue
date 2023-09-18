@@ -14,7 +14,7 @@
         <span>主控制台</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="/home/control">控制面板</el-menu-item>
+        <el-menu-item index="/home/screen">控制面板</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
     <el-submenu index="2">

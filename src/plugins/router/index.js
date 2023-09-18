@@ -8,12 +8,13 @@ import DataanalysisRoutes from './dataanalysis'
 import ManagementRoutes from './management'
 import TrainmodelRoutes from './systemsetup'
 import RemindsRoutes from './remind'
+import ScreenRouts from './screen'
 const router = new VueRouter({
   mode: 'history',
   base: import.meta.env.BASE_URL,
   routes: [
     ...HomeRoutes, ...LoginRoutes,
-    ...AdvancedRoutes, ...DataanalysisRoutes, ...ManagementRoutes, ...TrainmodelRoutes, ...RemindsRoutes
+    ...AdvancedRoutes, ...DataanalysisRoutes, ...ManagementRoutes, ...TrainmodelRoutes, ...RemindsRoutes,...ScreenRouts
   ],
   catch: (err, vm, info) => {
     if (err instanceof NavigationDuplicated) {

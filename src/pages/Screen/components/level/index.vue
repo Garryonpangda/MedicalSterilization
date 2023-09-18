@@ -1,45 +1,12 @@
 <template>
-  <div class="notification-page">
-    <div class="bigtitle">
-      <p>数据板</p>
-      <p class="secondtext">统计设备数据</p>
-    </div>
-    <!-- 顶部盒子 -->
-    <div class="bigbox">
-      <div class="left_box">
-        <div class="first">
-          <div class="selt">
-            <e-label>数据统计范围：</e-label>
-            <el-select v-model="value" placeholder="请选择" class="choose">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </div>
-          <div
-            class="echarts-container"
-            ref="chartContainer"
-            style="width: 40%; height: 300px"
-          ></div>
-          <div
-            class="right_echarts"
-            ref="chartContainer2"
-            style="width: 50%; height: 400px"
-          ></div>
-        </div>
-      </div>
-      <div class="right_box">
+     <div class="right_box">
         <div class="maintenance-title">
           <img
             
-           src="../../assets/img/setting.png"
+          src="@/assets/img/setting.png" 
             class="maintenance-icon"
           />
-          <p class="maintenance-text">维护提示</p>
+          <p class="maintenance-text">上报记录</p>
         </div>
 
         <div
@@ -56,14 +23,11 @@
           >
         </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import * as echarts from "echarts";
 export default {
-  data() {
+data() {
     return {
       // ...其他数据
       selectedRange: "", // 选择的数据统计范围
@@ -110,84 +74,7 @@ export default {
       value: "",
     };
   },
-  mounted() {
-    this.drawChart();
-    this.initChart();
-  },
-  methods: {
-    drawChart() {
-      let myChart = echarts.init(this.$refs.chartContainer);
-      // 模拟一些数据
-      const data = [120, 200, 150, 80, 70, 110];
-
-      let option = {
-        title: {
-          text: "设备在线情况",
-        },
-        tooltip: {
-          trigger: "item",
-        },
-        legend: {
-          top: "10%",
-          left: "center",
-          itemWidth: 10, // 调整图例项的宽度
-          itemHeight: 10, // 调整图例项的高度
-        },
-        series: [
-          {
-            name: "Access From",
-            type: "pie",
-            radius: "40%",
-            data: [
-              { value: 1048, name: "Search Engine" },
-              { value: 735, name: "Direct" },
-              { value: 580, name: "Email" },
-              { value: 484, name: "Union Ads" },
-              { value: 300, name: "Video Ads" },
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)",
-              },
-            },
-          },
-        ],
-      };
-
-      // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
-    },
-    initChart() {
-      let myChart = echarts.init(this.$refs.chartContainer2);
-      // 模拟一些数据
-      const data = [120, 200, 150, 80, 70, 110];
-
-      let option = {
-        title: {
-          text: "设备数量趋势（台）",
-        },
-        xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          {
-            data: [120, 200, 150, 80, 70, 110, 130],
-            type: "bar",
-          },
-        ],
-      };
-
-      // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
-    },
-  },
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -260,14 +147,17 @@ export default {
 }
 
 .maintenance-icon {
-  width: 24px;
-  height: 24px;
-  /* Your styles for .maintenance-icon */
+  
+      width: 30px;
+      height: 30px;
+      margin-right: 5px;
+    
+
 }
 
 .maintenance-text {
   margin-left: 10px;
-  font-size: 16px;
+  font-size: 23px;
   font-weight: bold;
   color: white;
   /* Your styles for .maintenance-text */

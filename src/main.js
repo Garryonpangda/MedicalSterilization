@@ -12,7 +12,8 @@ import globalCompPlugins from '@/plugins/components'
 
 import App from './App.vue'
 import './style.scss'
-
+import *as echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
 
 
