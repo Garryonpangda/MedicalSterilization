@@ -1,16 +1,8 @@
 <template>
   <div class="flex" id="home_header">
     <div class="icon">
-      <i
-        class="el-icon-s-fold"
-        v-show="!isCollapse"
-        @click="changeMenuState"
-      ></i>
-      <i
-        class="el-icon-s-unfold"
-        v-show="isCollapse"
-        @click="changeMenuState"
-      ></i>
+      <i class="el-icon-s-fold" v-show="!isCollapse" @click="changeMenuState"></i>
+      <i class="el-icon-s-unfold" v-show="isCollapse" @click="changeMenuState"></i>
       <i class="el-icon-arrow-left" @click="goback"></i>
       <i class="el-icon-refresh-right" @click="refresh">
       </i>
@@ -23,11 +15,7 @@
           <span class="pingtai">平台</span>
         </el-breadcrumb-item>
         <!--  循环遍历面包屑列表 -->
-        <el-breadcrumb-item
-          :to="{ path: item.path }"
-          v-for="(item, index) in breadList"
-          :key="index"
-        >
+        <el-breadcrumb-item :to="{ path: item.path }" v-for="(item, index) in breadList" :key="index">
           <span> {{ item.meta.title }}</span>
         </el-breadcrumb-item>
       </el-breadcrumb>
@@ -35,32 +23,32 @@
     <div class="info flex">
       <div>{{ timeStr }}</div>
       <div class="vertical_line"></div>
-      <div>欢迎 {{ "admin" }}</div>
+      <div>欢迎 {{ username }}</div>
       <div class="vertical_line"></div>
-      <el-button
-        type="text"
-        icon="el-icon-switch-button"
-        size="medium"
-        style="margin-right: 10px; color: aliceblue"
-        @click="loginOut"
-        >退出</el-button
-      >
+      <el-button type="text" icon="el-icon-switch-button" size="medium" style="margin-right: 10px; color: aliceblue"
+        @click="loginOut">退出</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import { getCurTimeMixin } from "@/mixin/time.js";
+import { logout } from "@/utils/api/User"
+import { useUserStore } from "@/stores/user"
 export default {
   mixins: [getCurTimeMixin],
   data() {
     return {
       isCollapse: false,
       breadList: [],
+      username:""
     };
   },
   created() {
     this.getBreadcrumb();
+    const userStore = useUserStore()
+    this.username=userStore.userInfo.name
+    
   },
   watch: {
     $route() {
@@ -72,12 +60,18 @@ export default {
       this.isCollapse = !this.isCollapse;
       this.$bus.$emit("changeMenuState", this.isCollapse);
     },
-    loginOut() {
-      this.$message.success({
-        message: "退出成功！",
-        center: true,
-      });
-      this.$router.push("/login");
+    async loginOut() {
+      const res = await logout()
+      console.log(res)
+      if (res.code == 20021) {
+        useUserStore().updateUserInfo(null)
+        this.$message.success({
+          message: "退出成功！",
+          center: true,
+        });
+        this.$router.push("/login");
+      }
+
     },
     getBreadcrumb() {
       console.log(this.$route.matched); //可以获取上下文路由 也就是可以获取父亲和孩子路由组成的数组
@@ -87,13 +81,14 @@ export default {
         this.breadList = [];
       }
     },
-    goback(){
-        this.$router.go(-1);
+    goback() {
+      this.$router.go(-1);
     },
-    refresh(){
+    refresh() {
 
     }
   },
+
 };
 </script>
 
@@ -109,10 +104,12 @@ export default {
     font-size: 26px;
     color: white;
     cursor: pointer;
-    .el-icon-arrow-left{
+
+    .el-icon-arrow-left {
       margin-left: 20px;
     }
-    .el-icon-refresh-right{
+
+    .el-icon-refresh-right {
       margin-left: 20px;
     }
 
@@ -125,20 +122,24 @@ export default {
       line-height: 32px;
     }
   }
+
   .backTo {
     width: 200px;
     height: 30px;
     background-color: aquamarine;
+
     .el-icon-edit {
       width: 200px;
       margin-top: 300px;
     }
   }
+
   .nav {
     width: 250px;
     height: 35px;
     margin-left: -320px;
     padding-top: 17px;
+
     span {
       color: white;
       font-size: 15px;

@@ -3,8 +3,13 @@ import axios from "axios";
 import nProgress from 'nprogress';
 import 'nprogress/nprogress.css'
 
+// axios.defaults.withCredentials = true
 const request = axios.create({
-    baseURL: 'http://localhost:80'
+    baseURL: 'http://101.34.248.186:8085',
+    // credentials: true,
+    withCredentials: true,
+
+
 })
 
 request.interceptors.request.use((config) => {
