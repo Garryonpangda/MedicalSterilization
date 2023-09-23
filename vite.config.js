@@ -16,16 +16,5 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src',
                 import.meta.url))
         }
-    },
-    server: {
-        proxy: {
-            // 添加代理设置
-            '/api': {
-                target: 'http://localhost:8085', // 将请求代理到的目标服务器地址
-                changeOrigin: true, // 启用跨域
-                rewrite: (path) => path.replace(/^\/api/, '') // 重写请求路径
-            }
-            // 可以添加多个代理设置
-        }
     }
 });

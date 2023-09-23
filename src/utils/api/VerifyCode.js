@@ -7,3 +7,11 @@ export const getVerifyCode = function() {
         params: {}
     })
 }
+
+export const isLogin = function() {
+
+    return request.get('/isLogin', {
+
+        params: {}
+    })
+}
