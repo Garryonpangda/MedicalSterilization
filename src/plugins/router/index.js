@@ -54,7 +54,6 @@ router.beforeEach(async(to, from, next) => {
 
     } else if (to.matched.some(record => record.meta.isLogin)) {
         var res = await isLogin()
-        console.log("登录页面");
         console.log(res);
         if (res.code == 200) {
             if (res.data.isLogin == true) {
