@@ -5,11 +5,11 @@ import 'nprogress/nprogress.css'
 
 // axios.defaults.withCredentials = true
 const request = axios.create({
-    baseURL: 'http://101.34.248.186:8085',
+    // baseURL: 'http://101.34.248.186:8088/api',
+    // baseURL: 'http://101.34.248.186:8085',
+    baseURL: 'http://localhost:8085',
     // credentials: true,
     withCredentials: true,
-
-
 })
 
 request.interceptors.request.use((config) => {

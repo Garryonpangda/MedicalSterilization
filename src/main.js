@@ -22,11 +22,14 @@ Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(globalCompPlugins)
 
+
+
+
 new Vue({
-  router,
-  pinia,
-  render: (h) => h(App),
-  beforeCreate() {
-    Vue.prototype.$bus = this
-  }
+    router,
+    pinia,
+    render: (h) => h(App),
+    beforeCreate() {
+        Vue.prototype.$bus = this
+    }
 }).$mount('#app')
