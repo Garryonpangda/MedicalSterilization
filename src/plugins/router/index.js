@@ -16,7 +16,7 @@ const router = new VueRouter({
     base: import.meta.env.BASE_URL,
     routes: [
         ...HomeRoutes, ...LoginRoutes,
-        ...AdvancedRoutes, ...DataanalysisRoutes, ...ManagementRoutes, ...TrainmodelRoutes, ...RemindsRoutes,...ScreenRoutes
+        ...AdvancedRoutes, ...DataanalysisRoutes, ...ManagementRoutes, ...TrainmodelRoutes, ...RemindsRoutes, ...ScreenRoutes
     ],
     catch: (err, vm, info) => {
         if (err instanceof NavigationDuplicated) {
@@ -31,7 +31,7 @@ const router = new VueRouter({
 
 })
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     var userstore = useUserStore()
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // 如果路由需要登录才能访问
@@ -61,7 +61,9 @@ router.beforeEach(async(to, from, next) => {
             if (res.data.isLogin == true) {
                 userstore.updateUserInfo(res.data.user)
                 next({
+                    // path: '/home/control', // 重定向到登录页面
                     path: '/home/control', // 重定向到登录页面
+
                     // query: { redirect: to.fullPath } // 保存用户原本要访问的页面
                 });
             } else {
