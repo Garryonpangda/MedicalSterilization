@@ -62,7 +62,7 @@ router.beforeEach(async (to, from, next) => {
                 userstore.updateUserInfo(res.data.user)
                 next({
                     // path: '/home/control', // 重定向到登录页面
-                    path: '/home/control', // 重定向到登录页面
+                    path: '/home/screen', // 重定向到登录页面
 
                     // query: { redirect: to.fullPath } // 保存用户原本要访问的页面
                 });

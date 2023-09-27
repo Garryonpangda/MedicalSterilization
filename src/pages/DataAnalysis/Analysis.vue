@@ -234,7 +234,7 @@ export default {
     position: absolute;
     width: 25%;
     height: 550px;
-    margin-left: 950px;
+    margin-left: 920px;
     margin-top: 10px;
     background-color: rgba(1, 84, 120);
   }

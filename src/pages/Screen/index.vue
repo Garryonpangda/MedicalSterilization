@@ -91,8 +91,8 @@ export default {
   position: fixed;
   width: 1920px;
   height: 600px;
-  left: 38%;
-  top: 16%;
+  left: 42%;
+  top: 16.5%;
   transform: translate(-50%, -50%);
 }
 
@@ -109,7 +109,7 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .screen .bottom .right .rank {
@@ -157,11 +157,11 @@ export default {
 
 
 .screen .bottom .center .map {
-  width: 900px;
-  height: 950px;
-  background-color: bisque;
+  width: 800px;
+  height: 800px;
+  background-color: rgba(1, 84, 120, 0.7490196078);
   margin-top: 50px;
-  margin-left: 0px;
+  margin-left: -120px;
 }
 
 .screen .bottom .center .line {

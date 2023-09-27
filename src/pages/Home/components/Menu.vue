@@ -1,6 +1,13 @@
 <template>
-  <el-menu :default-active="this.$router.path" class="el-menu-vertical-demo" active-text-color="#fff" text-color="#fff"
-    :collapse="isCollapse" router background-color="#0d0d0f">
+  <el-menu
+    :default-active="this.$router.path"
+    class="el-menu-vertical-demo"
+    active-text-color="#fff"
+    text-color="#fff"
+    :collapse="isCollapse"
+    router
+    background-color="#0d0d0f"
+  >
     <el-submenu index="1" v-if="menu('main_console')">
       <template slot="title">
         <i class="el-icon-s-home"></i>
@@ -10,6 +17,7 @@
         <el-menu-item index="/home/screen">控制面板</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
+   
     <el-submenu index="2" v-if="menu('reminder_list')">
       <template slot="title">
         <i class="el-icon-tickets"></i>
@@ -34,8 +42,16 @@
         <span>运维管理</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="/home/devicemanage" v-if="menu('device_management')">设备管理</el-menu-item>
-        <el-menu-item index="/home/organizationmanage" v-if="menu('organization_management')">组织管理</el-menu-item>
+        <el-menu-item
+          index="/home/devicemanage"
+          v-if="menu('device_management')"
+          >设备管理</el-menu-item
+        >
+        <el-menu-item
+          index="/home/organizationmanage"
+          v-if="menu('organization_management')"
+          >组织管理</el-menu-item
+        >
       </el-menu-item-group>
     </el-submenu>
 
@@ -45,9 +61,15 @@
         <span>高级设置</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="/home/project" v-if="menu('project_management')">项目管理</el-menu-item>
-        <el-menu-item index="/home/role" v-if="menu('role_management')">角色管理</el-menu-item>
-        <el-menu-item index="/home/account" v-if="menu('account_management')">账号管理</el-menu-item>
+        <el-menu-item index="/home/project" v-if="menu('project_management')"
+          >项目管理</el-menu-item
+        >
+        <el-menu-item index="/home/role" v-if="menu('role_management')"
+          >角色管理</el-menu-item
+        >
+        <el-menu-item index="/home/account" v-if="menu('account_management')"
+          >账号管理</el-menu-item
+        >
       </el-menu-item-group>
     </el-submenu>
     <el-submenu index="6">
@@ -61,42 +83,35 @@
         <el-menu-item index="/home/changeemail">修改邮箱</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
-
   </el-menu>
 </template>
 
 <script>
-import { useUserStore } from "@/stores/user"
+import { useUserStore } from "@/stores/user";
 export default {
   data() {
     return {
       isCollapse: false,
-      user: null
+      user: null,
     };
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
     menu(au) {
-      
       for (var i = 0; i < this.user.authorities.length; i++) {
         if (au === this.user.authorities[i].authority) {
-          return true
+          return true;
         }
-        
       }
-
-    }
+    },
   },
   created() {
-    const userStore = useUserStore()
-    this.user = userStore.userInfo
+    const userStore = useUserStore();
+    this.user = userStore.userInfo;
   },
   mounted() {
     this.$bus.$on("changeMenuState", (value) => {
       this.isCollapse = value;
-
     });
   },
   beforeDestroy() {

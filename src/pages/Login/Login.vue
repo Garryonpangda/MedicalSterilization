@@ -140,7 +140,7 @@ export default {
       const userStore = useUserStore()
 
 
-
+console.log("验证码",this.form.code);
       const res = await doLogin(this.form.name, this.form.password, this.form.code, this.form.remember)
       console.log(res)
       if (res.code == 20010) {
@@ -155,7 +155,7 @@ export default {
         userStore.updateUserInfo(res.data)
         var userrole=userStore.setRole()
         
-        this.$router.push("/home/control");
+        this.$router.push("/home/screen");
       }
 
 

@@ -18,7 +18,7 @@
             <p class="info-text">{{ item.content }}</p>
             <p class="info-time">{{ item.time }}</p>
           </div>
-          <router-link :to="'/details/' + item.id" class="info-detail"
+          <router-link :to="'/home/malfunction' " class="info-detail"
             >详情</router-link
           >
         </div>
