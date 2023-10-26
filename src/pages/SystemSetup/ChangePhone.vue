@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import {UpdatePhonenumber} from "@/utils/api/System_Setting/System_SettingApi"
 export default {
   data() {
     return {
@@ -27,9 +28,21 @@ export default {
       // 取消修改，清空输入框
       this.phoneForm.newPhone = "";
     },
-    savePhone() {
+    async savePhone() {
       // 保存手机号
       if (this.phoneForm.newPhone) {
+        var data = JSON.stringify({
+          'phonenumber': this.phoneForm.newPhone,
+        })
+        var res = await UpdatePhonenumber(data)
+        console.log(res);
+        if(res.code==200){
+          
+          this.$message.success("修改成功");
+          cancelPhone()
+        }else{
+          this.$message.error("修改失败");
+        }
         console.log("新手机号:", this.phoneForm.newPhone);
       } else {
         // 如果新手机号为空，可以显示错误提示给用户

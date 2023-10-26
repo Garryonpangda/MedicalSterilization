@@ -1,7 +1,7 @@
 <template>
   <div class="centered-container">
-  <h2>修改邮箱</h2>
-    
+    <h2>修改邮箱</h2>
+
     <el-form :model="emailForm" label-width="100px">
       <el-form-item label="新邮箱" prop="newEmail" class="custom-label">
         <el-input v-model="emailForm.newEmail" class="ipt"></el-input>
@@ -15,6 +15,7 @@
 </template>   
 
 <script>
+import { UpdateEmail } from "@/utils/api/System_Setting/System_SettingApi"
 export default {
   data() {
     return {
@@ -28,10 +29,20 @@ export default {
       // 取消修改，清空输入框
       this.emailForm.newEmail = "";
     },
-    save() {
+    async save() {
       // 在这里添加保存邮箱的逻辑
       if (this.emailForm.newEmail) {
-        console.log("新邮箱:", this.emailForm.newEmail);
+        var data = JSON.stringify({
+          'email': this.emailForm.newEmail,
+        })
+        var res = await UpdateEmail(data)
+        console.log(res);
+        if(res.code==200){
+          this.$message.success("修改成功");
+          this.cancel();
+        }else{
+          this.$message.error("修改失败");
+        }
       } else {
         // 如果新邮箱为空，可以显示错误提示给用户
         this.$message.error("新邮箱不能为空");
@@ -46,10 +57,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 50vh; /* 让容器铺满视口高度的一半 */
-  margin-top: 10vh; /* 上边距为视口高度的10% */
+  height: 50vh;
+  /* 让容器铺满视口高度的一半 */
+  margin-top: 10vh;
+  /* 上边距为视口高度的10% */
   margin-left: 50vh;
 }
+
 .ipt {
   width: 400px;
 }

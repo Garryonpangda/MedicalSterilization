@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import {UpdatePassword} from "@/utils/api/System_Setting/System_SettingApi"
 export default {
   data() {
     return {
@@ -53,11 +54,21 @@ export default {
       this.passwordForm.newPassword = "";
       this.passwordForm.confirmPassword = "";
     },
-    savePassword() {
+    async savePassword() {
       // 在这里添加保存密码的逻辑
       if (this.passwordForm.newPassword === this.passwordForm.confirmPassword) {
-        console.log("原始密码:", this.passwordForm.oldPassword);
-        console.log("新密码:", this.passwordForm.newPassword);
+        var data = JSON.stringify({
+        'oldpassword': this.passwordForm.oldPassword,
+        "newpassword": this.passwordForm.newPassword
+      })
+        var res=await UpdatePassword(data)
+        console.log(res);
+        if (res.data=="修改成功") {
+          this.$message.success(res.data);
+          cancelPassword()
+        }else{
+          this.$message.error(res.data);
+        }
       } else {
         // 如果新密码和确认密码不匹配，可以显示错误提示给用户
         this.$message.error("新密码和确认密码不匹配");
