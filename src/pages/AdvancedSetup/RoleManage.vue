@@ -278,34 +278,35 @@
             width="180"
           ></el-table-column>
           <el-table-column label="账户数量" width="180">
-             
-            <template slot-scope="scope"
-              >
-               <div style="text-align: center">
-              ({{ scope.row.current }}/{{ scope.row.max }})
-               </div></template
+            <template slot-scope="scope">
+              <div style="text-align: center">
+                ({{ scope.row.current }}/{{ scope.row.max }})
+              </div></template
             >
-             
           </el-table-column>
 
-          <el-table-column label="其他" >
-            <template slot-scope="scope">
-              <el-button @click="edit(scope.row)" type="text" size="small"
-                >编辑</el-button
-              >
-              <el-button
-                @click="authorization(scope.row)"
-                type="text"
-                size="small"
-                >功能授权</el-button
-              >
-              <el-button
-                @click="handleDetail(scope.row)"
-                type="text"
-                size="small"
-                >详情</el-button
-              >
-            </template>
+          <el-table-column label="其他">
+          
+              <template slot-scope="scope">
+                <div class="button-container">
+                  <el-button @click="edit(scope.row)" type="text" size="small"
+                    >编辑</el-button
+                  >
+                  <el-button
+                    @click="authorization(scope.row)"
+                    type="text"
+                    size="small"
+                    >功能授权</el-button
+                  >
+                  <el-button
+                    @click="handleDetail(scope.row)"
+                    type="text"
+                    size="small"
+                    >详情</el-button
+                  >
+                </div>
+              </template>
+        
           </el-table-column>
         </el-table>
 
@@ -599,6 +600,13 @@ export default {
       margin-top: 5px;
     }
   }
+  .button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* 可根据需要设置高度 */
+  }
+
 
   .top {
     margin-top: 30px;

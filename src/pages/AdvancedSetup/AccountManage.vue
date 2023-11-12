@@ -329,12 +329,14 @@
 
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button @click="edit(scope.row)" type="text" size="small"
-                  >编辑</el-button
-                >
-                <el-button @click="detail" type="text" size="small"
-                  >详情</el-button
-                >
+                <div class="button-container">
+                  <el-button @click="edit(scope.row)" type="text" size="small"
+                    >编辑</el-button
+                  >
+                  <el-button @click="detail" type="text" size="small"
+                    >详情</el-button
+                  >
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -605,6 +607,10 @@ export default {
   .notification-item {
     text-align: center;
     flex: 1;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
   }
 
   .count {

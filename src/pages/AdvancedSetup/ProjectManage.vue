@@ -214,7 +214,7 @@
         <el-table
           :data="notificationList"
           :height="400"
-         style="width: 100%"
+          style="width: 100%"
           :header-cell-style="{
             background: '#027DB4',
             color: 'white',
@@ -248,11 +248,13 @@
             width="283"
           ></el-table-column>
 
-          <el-table-column label="其他" >
+          <el-table-column label="其他">
             <template slot-scope="scope">
-              <el-button @click="edit(scope.row)" type="text" size="small"
-                >编辑</el-button
-              >
+              <div class="button-container">
+                <el-button @click="edit(scope.row)" type="text" size="small"
+                  >编辑</el-button
+                >
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -663,7 +665,18 @@ export default {
       margin-top: 5px;
     }
   }
-
+  .button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* 可根据需要设置高度 */
+  }
+  .button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* 可根据需要设置高度 */
+  }
   .right {
     float: right;
   }
