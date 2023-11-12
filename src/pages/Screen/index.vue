@@ -3,9 +3,7 @@
     <!-- 数据大屏展示内容区域 -->
     <div class="screen" ref="screen">
       <!-- 数据大屏顶部 -->
-      <div class="top">
-        <Top />
-      </div>
+     
       <div class="bottom">
         <div class="left">
           <Title class="title"></Title>
@@ -92,7 +90,7 @@ export default {
   width: 1920px;
   height: 600px;
   left: 42%;
-  top: 16.5%;
+  top: 20.5%;
   transform: translate(-50%, -50%);
 }
 

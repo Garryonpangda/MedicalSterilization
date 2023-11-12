@@ -155,7 +155,7 @@
 
       <!-- 列表 -->
       <div class="notification-list">
-        <el-table :data="notificationList" height="300" width="100%" :header-cell-style="{
+        <el-table :data="notificationList" height="400" style="width: 100%" :header-cell-style="{
           background: '#027DB4',
           color: 'white',
         }">
@@ -169,7 +169,7 @@
 
           <el-table-column prop="devicenum" label="设备数量" width="100"></el-table-column>
 
-          <el-table-column label="其他" width="230px">
+          <el-table-column label="其他" >
             <template slot-scope="scope">
               <el-button @click="authorization(scope.row)" type="text" size="small">授权码</el-button>
               <el-button @click="userlist(scope.row)" type="text" size="small">用户列表</el-button>

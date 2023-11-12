@@ -76,7 +76,7 @@
 
     <!-- 列表 -->
     <div class="notification-list">
-      <el-table :data="notificationList" height="300"  style="width: 100%"  :header-cell-style="{
+      <el-table :data="notificationList" height="320"  style="width: 100%"  :header-cell-style="{
             background: '#027DB4',
             color: 'white',
             textAlign: 'center',
