@@ -22,7 +22,7 @@ export const ListRoles = function() {
 }
 
 export const ListRolesByProjectid = function(projectid) {
-    return request.get('/advanced_setting/ListRilesByProjectid', {
+    return request.get('/advanced_setting/ListRolesByProjectid', {
         params: { projectid }
     })
 }
