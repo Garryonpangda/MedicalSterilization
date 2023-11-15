@@ -75,10 +75,11 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+.home_page {
+  height: 250vh;
 .container {
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 100%;
   background: url(./images/bg.png) no-repeat;
@@ -86,12 +87,11 @@ export default {
 }
 
 .screen {
-  position: fixed;
-  width: 1920px;
-  height: 600px;
-  left: 42%;
-  top: 20.5%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 24rem;
+  height: 7.5rem;
+  left: 3.75rem;
+  margin-top: 0.625rem;
 }
 
 .screen .top {
@@ -107,7 +107,8 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-left: 1.575rem;
+  margin-top:-48px;
 }
 
 .screen .bottom .right .rank {
@@ -132,6 +133,7 @@ export default {
   flex: 1;
   height: 1040px;
   display: flex;
+  margin-top: -50px;
   flex-direction: column;
 }
 
@@ -158,11 +160,12 @@ export default {
   width: 800px;
   height: 800px;
   background-color: rgba(1, 84, 120, 0.7490196078);
-  margin-top: 50px;
-  margin-left: -120px;
+  margin-top: .3125rem;
+  margin-left: 1.5rem;
 }
 
 .screen .bottom .center .line {
   flex: 1;
+}
 }
 </style>

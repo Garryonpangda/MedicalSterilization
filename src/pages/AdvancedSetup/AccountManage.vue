@@ -634,6 +634,9 @@ export default {
     .el-pagination {
       margin-top: 5px;
     }
+    .el-form-item__label {
+      color: white; /* 设置标签文本颜色为白色 */
+    }
   }
 
   .el-carousel__item h3 {
