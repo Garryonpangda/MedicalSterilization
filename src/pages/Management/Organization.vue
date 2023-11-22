@@ -158,6 +158,7 @@
         <el-table :data="notificationList" height="400" style="width: 100%" :header-cell-style="{
           background: '#027DB4',
           color: 'white',
+          textAlign: 'center',
         }">
           <el-table-column type="selection" width="65"></el-table-column>
 
@@ -169,11 +170,14 @@
 
           <el-table-column prop="devicenum" label="设备数量" width="100"></el-table-column>
 
-          <el-table-column label="其他" >
+          <el-table-column label="其他">
             <template slot-scope="scope">
-              <el-button @click="authorization(scope.row)" type="text" size="small">授权码</el-button>
-              <el-button @click="userlist(scope.row)" type="text" size="small">用户列表</el-button>
-              <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+              <div class="button-container">
+                <el-button @click="authorization(scope.row)" type="text" size="small">授权码</el-button>
+                <el-button @click="userlist(scope.row)" type="text" size="small">用户列表</el-button>
+                <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+              </div>
+
             </template>
           </el-table-column>
         </el-table>
@@ -188,7 +192,7 @@
 
 <script>
 import { ListAllOrgnization, ListUsersByOrgnizationId, SelectOrgnization, AddOrganization } from "@/utils/api/Mocha_itom/Organization"
-import { CheckUserName} from "@/utils/api/Advanced_setting/ProjectManage"
+import { CheckUserName } from "@/utils/api/Advanced_setting/ProjectManage"
 
 export default {
   data() {
@@ -358,6 +362,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  /* 可根据需要设置高度 */
+}
 .home_page {
   height: 250vh;
 

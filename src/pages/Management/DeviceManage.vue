@@ -147,6 +147,7 @@
         <el-table :data="notificationList" height="350" style="width: 100%" :header-cell-style="{
           background: '#027DB4',
           color: 'white',
+          textAlign: 'center',
 
         }">
           <el-table-column type="selection" width="65"></el-table-column>
@@ -170,11 +171,13 @@
           <el-table-column prop="device.duration" label="使用时长(秒)" width="120"></el-table-column>
           <el-table-column prop="device.cout" label="预计次数" width="100"></el-table-column>
 
-          <el-table-column label="其他" >
-            <template slot-scope="scope">
-              <el-button @click="userecord(scope.row)" type="text" size="small">使用记录</el-button>
-              <el-button @click="mianrecord(scope.row)" type="text" size="small">维护记录</el-button>
-              <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+          <el-table-column label="其他">
+            <template slot-scope="scope" >
+              <div class="button-container">
+                <el-button @click="userecord(scope.row)" type="text" size="small">使用记录</el-button>
+                <el-button @click="mianrecord(scope.row)" type="text" size="small">维护记录</el-button>
+                <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -458,6 +461,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  /* 可根据需要设置高度 */
+}
+
 .home_page {
   height: 250vh;
 

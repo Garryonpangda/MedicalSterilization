@@ -218,6 +218,7 @@
           :header-cell-style="{
             background: '#027DB4',
             color: 'white',
+            textAlign: 'center',
           }"
         >
           <el-table-column type="selection" width="65"></el-table-column>
