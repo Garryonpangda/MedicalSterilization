@@ -197,7 +197,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url(../../src/assets/img/login9.png) no-repeat;
+  background: url(../../src/assets/img/医疗.jpg) no-repeat;
   background-size: cover;
 }
 
@@ -236,7 +236,8 @@ export default {
   position: absolute;
   width: 400px;
   padding: 40px;
-  left: 560px;
+  left: 540px;
+ 
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   text-align: center;
