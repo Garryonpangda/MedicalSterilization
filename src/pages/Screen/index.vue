@@ -107,8 +107,8 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 1.575rem;
-  margin-top:-48px;
+  margin-top: -2.0rem;
+  margin-left: 2.5rem;
 }
 
 .screen .bottom .right .rank {
@@ -133,7 +133,8 @@ export default {
   flex: 1;
   height: 1040px;
   display: flex;
-  margin-top: -50px;
+  margin-top: -2.0rem;
+  margin-left: 4.5rem;
   flex-direction: column;
 }
 
@@ -160,8 +161,9 @@ export default {
   width: 800px;
   height: 800px;
   background-color: rgba(1, 84, 120, 0.7490196078);
-  margin-top: .3125rem;
-  margin-left: 1.5rem;
+  margin-top: .9125rem;
+  margin-left: 2.0rem;
+
 }
 
 .screen .bottom .center .line {
