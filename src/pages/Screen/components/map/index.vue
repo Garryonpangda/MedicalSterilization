@@ -267,7 +267,7 @@ export default {
   margin-top: 10px;
 }
 .Tip-text {
-position: fixed;
+position: absolute;
   margin-top:10px;
   margin-left: 30px;
   font-size: 26px;

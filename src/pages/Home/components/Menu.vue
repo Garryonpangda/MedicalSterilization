@@ -91,7 +91,7 @@ import { useUserStore } from "@/stores/user";
 export default {
   data() {
     return {
-      isCollapse: false,
+      isCollapse: true,
       user: null,
     };
   },
@@ -111,7 +111,7 @@ export default {
   },
   mounted() {
     this.$bus.$on("changeMenuState", (value) => {
-      this.isCollapse = value;
+      this.isCollapse = true;
     });
   },
   beforeDestroy() {
