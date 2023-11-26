@@ -1,32 +1,22 @@
 <template>
   <div class="echartsMapAllDemo">
     <!-- style的宽高一定要写，不写也不会展示echarts图 -->
-    <div
-      id="myEcharts"
-      ref="myEcharts"
-      style="width: 900px; height: 100vh; "
-    ></div>
-    <div class="secondBox">
-      <div class="Tip-title">
+    <div id="myEcharts" ref="myEcharts" style="width: 900px; height: 100vh; "></div>
+    <!-- <div class="secondBox"> -->
+      <!-- <div class="Tip-title">
         <img src="@/assets/img/setting.png" class="Tip-icon" />
         <p class="Tip-text">维护提示</p>
       </div>
       <div class="smallbox">
-          <div
-          class="info-box"
-          v-for="(item, index) in maintenanceInfo"
-          :key="index"
-        >
+        <div class="info-box" v-for="(item, index) in maintenanceInfo" :key="index">
           <div class="info-content">
             <p class="info-text">{{ item.content }}</p>
             <p class="info-time">{{ item.time }}</p>
           </div>
-          <router-link :to="'/home/malfunction'" class="info-detail"
-            >详情</router-link
-          >
+          <router-link :to="'/home/malfunction'" class="info-detail">详情</router-link>
         </div>
-        </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
   </div>
 </template>
 <script>
@@ -37,7 +27,7 @@ export default {
       // ...其他数据
       selectedRange: "", // 选择的数据统计范围
       echartsInstance: null, // echarts实例
-    
+
       maintenanceInfo: [
         {
           id: 1,
@@ -49,13 +39,13 @@ export default {
           content: "设备B维护计划已更新",
           time: "2023-08-14 14:30",
         },
-       
-          {
+
+        {
           id: 3,
           content: "设备B维护计划已更新",
           time: "2023-08-14 14:30",
         },
-     
+
         // ...更多维护信息...
       ],
       options: [
@@ -253,59 +243,65 @@ export default {
 <style lang="less">
 .home_page {
   height: 150vh;
-.secondBox {
-  position: absolute;
-  width: 800px;
-  height: 185px;
-  background-color: #047dad;
-}
-.Tip-icon {
- position: fixed;
-  width: 30px;
-  height: 30px;
-  margin-right: 5px;
-  margin-top: 10px;
-}
-.Tip-text {
-position: absolute;
-  margin-top:10px;
-  margin-left: 30px;
-  font-size: 26px;
-  font-weight: bold;
-  color: white;
-}
 
-.smallbox{
-  margin-top: 50px;
-}
-.info-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: white;
-}
+  .secondBox {
+    position: absolute;
+    width: 800px;
+    height: 185px;
+    background-color: #047dad;
+  }
+
+  .Tip-icon {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: 10px;
+  }
+
+  .Tip-text {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .smallbox {
+    margin-top: 50px;
+  }
+
+  .info-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+  }
 
 
 
-.info-detail {
-  color: rgb(103, 199, 244);
-  text-decoration: none;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 10px;
-}
-.info-text{
-  color: rgb(252, 64, 64);
-}
-.info-time{
+  .info-detail {
+    color: rgb(103, 199, 244);
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 10px;
+  }
 
-  
-  font-size: 10px;
-}
+  .info-text {
+    color: rgb(252, 64, 64);
+  }
+
+  .info-time {
+
+
+    font-size: 10px;
+  }
 }
 </style>
 

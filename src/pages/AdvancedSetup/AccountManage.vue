@@ -6,22 +6,13 @@
     </div>
 
     <!-- 添加账号 -->
-    <el-dialog
-      title="添加账号"
-      :visible.sync="dialogVisible"
-      width="40%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="添加账号" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
       <div>
         <el-form :model="acForm" label-width="80px" :rules="rules">
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="账户名" prop="username">
-                <el-input
-                  v-model="acForm.username"
-                  placeholder="请填写账户名"
-                  class="long"
-                ></el-input>
+                <el-input v-model="acForm.username" placeholder="请填写账户名" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -29,11 +20,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="登陆密码" prop="pwd">
-                <el-input
-                  v-model="acForm.password"
-                  placeholder="请填写登录密码"
-                  class="long"
-                ></el-input>
+                <el-input v-model="acForm.password" placeholder="请填写登录密码" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -43,15 +30,10 @@
               <el-form-item v-if="roleoptions != null" label="角色选择">
                 <!-- <Select :options="options" @selected="selected" /> -->
 
-                <el-transfer
-                  :titles="['角色未拥有权限', '角色已拥有权限']"
-                  v-model="acForm.role"
-                  :props="{
-                    key: 'id',
-                    label: 'remark',
-                  }"
-                  :data="formattedAumenus"
-                >
+                <el-transfer :titles="['角色未拥有权限', '角色已拥有权限']" v-model="acForm.role" :props="{
+                  key: 'id',
+                  label: 'remark',
+                }" :data="formattedAumenus">
                 </el-transfer>
               </el-form-item>
             </el-col>
@@ -60,11 +42,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="姓名">
-                <el-input
-                  v-model="acForm.name"
-                  placeholder="请填写姓名"
-                  class="long"
-                ></el-input>
+                <el-input v-model="acForm.name" placeholder="请填写姓名" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -72,11 +50,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="手机号" prop="phone">
-                <el-input
-                  v-model="acForm.phone"
-                  placeholder="请填写手机号"
-                  class="long"
-                ></el-input>
+                <el-input v-model="acForm.phone" placeholder="请填写手机号" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -84,11 +58,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="邮箱地址">
-                <el-input
-                  v-model="acForm.email"
-                  placeholder="请填写邮箱地址"
-                  class="long"
-                ></el-input>
+                <el-input v-model="acForm.email" placeholder="请填写邮箱地址" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -101,22 +71,13 @@
     </el-dialog>
 
     <!-- 编辑账号 -->
-    <el-dialog
-      title="编辑"
-      :visible.sync="editpage"
-      width="40%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="编辑" :visible.sync="editpage" width="40%" :before-close="handleClose">
       <div>
         <el-form :model="editForm" label-width="80px" :rules="rules">
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="账户名" prop="username">
-                <el-input
-                  v-model="editForm.username"
-                  placeholder="请填写账户名"
-                  class="long"
-                ></el-input>
+                <el-input v-model="editForm.username" placeholder="请填写账户名" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -124,32 +85,20 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="登陆密码" prop="pwd">
-                <el-input
-                  v-model="editForm.password"
-                  placeholder="请填写登录密码"
-                  class="long"
-                ></el-input>
+                <el-input v-model="editForm.password" placeholder="请填写登录密码" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row :gutter="15">
             <el-col :span="400">
-              <el-form-item
-                :titles="['角色未拥有权限', '角色已拥有权限']"
-                v-if="roleoptions != null"
-                label="角色选择"
-              >
+              <el-form-item :titles="['角色未拥有权限', '角色已拥有权限']" v-if="roleoptions != null" label="角色选择">
                 <!-- <Select :options="options" @selected="selected" /> -->
 
-                <el-transfer
-                  v-model="editForm.role"
-                  :props="{
-                    key: 'id',
-                    label: 'remark',
-                  }"
-                  :data="formattedAumenus"
-                >
+                <el-transfer v-model="editForm.role" :props="{
+                  key: 'id',
+                  label: 'remark',
+                }" :data="formattedAumenus">
                 </el-transfer>
               </el-form-item>
             </el-col>
@@ -158,11 +107,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="姓名">
-                <el-input
-                  v-model="editForm.name"
-                  placeholder="请填写姓名"
-                  class="long"
-                ></el-input>
+                <el-input v-model="editForm.name" placeholder="请填写姓名" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -170,11 +115,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="手机号" prop="phone">
-                <el-input
-                  v-model="editForm.phone"
-                  placeholder="请填写手机号"
-                  class="long"
-                ></el-input>
+                <el-input v-model="editForm.phone" placeholder="请填写手机号" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -182,11 +123,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="邮箱地址">
-                <el-input
-                  v-model="editForm.email"
-                  placeholder="请填写邮箱地址"
-                  class="long"
-                ></el-input>
+                <el-input v-model="editForm.email" placeholder="请填写邮箱地址" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -207,54 +144,35 @@
             <el-row :gutter="15">
               <el-col :span="8">
                 <el-form-item label="名称">
-                  <el-input
-                    v-model="searchForm.username"
-                    placeholder="请输入"
-                  ></el-input>
+                  <el-input v-model="searchForm.username" placeholder="请输入"></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col v-if="isHW" :span="8">
                 <el-form-item label="选择项目" class="select">
-                  <el-select
-                    v-model="searchForm.projectid"
-                    placeholder="选择项目"
-                  >
-                    <el-option
-                      v-for="option in projectoptions"
-                      :key="option.id"
-                      :label="option.projectName"
-                      :value="option.projectId"
-                    ></el-option>
+                  <el-select v-model="searchForm.projectid" placeholder="选择项目">
+                    <el-option v-for="option in projectoptions" :key="option.id" :label="option.projectName"
+                      :value="option.projectId"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
 
               <el-col :span="8">
                 <el-form-item label="邮箱地址">
-                  <el-input
-                    v-model="searchForm.email"
-                    placeholder="请输入"
-                  ></el-input>
+                  <el-input v-model="searchForm.email" placeholder="请输入"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :span="8">
                 <el-form-item label="手机号">
-                  <el-input
-                    v-model="searchForm.phonenumber"
-                    placeholder="请输入"
-                  ></el-input>
+                  <el-input v-model="searchForm.phonenumber" placeholder="请输入"></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="8">
                 <el-form-item label="账号状态" class="select">
-                  <el-select
-                    v-model="searchForm.status"
-                    placeholder="请选择账号状态"
-                  >
+                  <el-select v-model="searchForm.status" placeholder="请选择账号状态">
                     <el-option label="全部" :value="2"></el-option>
                     <el-option label="正常" :value="1"></el-option>
                     <el-option label="冻结" :value="0"></el-option>
@@ -276,50 +194,21 @@
 
         <!-- 列表 -->
         <div class="notification-list">
-          <el-table
-            :data="notificationList"
-            height="320"
-            style="width: 100%"
-            :header-cell-style="{
-              background: '#027DB4',
-              color: 'white',
-              textAlign: 'center',
-              height: '20px',
-            }"
-          >
+          <el-table :data="notificationList" height="320" style="width: 100%" :header-cell-style="{
+            background: '#027DB4',
+            color: 'white',
+            'text-align': 'center',
+            height: '20px',
+          }" :cell-style="{ 'text-align': 'center' }">
             <el-table-column type="selection" width="50"></el-table-column>
 
-            <el-table-column
-              prop="name"
-              label="用户名"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="username"
-              label="登录账号名"
-              width="120"
-            ></el-table-column>
-            <el-table-column
-              prop="phonenumber"
-              label="手机号"
-              width="140"
-            ></el-table-column>
-            <el-table-column
-              prop="email"
-              label="邮箱"
-              width="150"
-            ></el-table-column>
-            <el-table-column
-              prop="remark"
-              label="角色"
-              width="130"
-            ></el-table-column>
+            <el-table-column prop="name" label="用户名" width="120"></el-table-column>
+            <el-table-column prop="username" label="登录账号名" width="120"></el-table-column>
+            <el-table-column prop="phonenumber" label="手机号" width="140"></el-table-column>
+            <el-table-column prop="email" label="邮箱" width="150"></el-table-column>
+            <el-table-column prop="remark" label="角色" width="130"></el-table-column>
 
-            <el-table-column
-              prop="updateTime"
-              label="上次登录时间"
-              width="230"
-            ></el-table-column>
+            <el-table-column prop="updateTime" label="上次登录时间" width="230"></el-table-column>
 
             <el-table-column prop="status" label="账号状态" width="150">
               <template slot-scope="scope">
@@ -330,24 +219,16 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <div class="button-container">
-                  <el-button @click="edit(scope.row)" type="text" size="small"
-                    >编辑</el-button
-                  >
-                  <el-button @click="detail" type="text" size="small"
-                    >详情</el-button
-                  >
+                  <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+                  <el-button @click="detail" type="text" size="small">详情</el-button>
                 </div>
               </template>
             </el-table-column>
           </el-table>
 
           <!-- 分页符 -->
-          <el-pagination
-            :current-page="currentPage"
-            :page-size="pageSize"
-            :total="total"
-            @current-change="handlePageChange"
-          ></el-pagination>
+          <el-pagination :current-page="currentPage" :page-size="pageSize" :total="total"
+            @current-change="handlePageChange"></el-pagination>
         </div>
       </div>
     </transition>
@@ -453,7 +334,7 @@ export default {
         .then((_) => {
           done();
         })
-        .catch((_) => {});
+        .catch((_) => { });
     },
 
     async select() {
@@ -462,7 +343,7 @@ export default {
       console.log(res);
       this.notificationList = res.data;
     },
-    detail() {},
+    detail() { },
     async edit(row) {
       var roleid = row.id;
       console.log(row);
@@ -516,7 +397,7 @@ export default {
       console.log(res);
       this.dialogVisible = false;
     },
-    edit_finish() {},
+    edit_finish() { },
     reset() {
       this.searchForm.username = "";
       this.searchForm.phonenumber = "";
@@ -530,7 +411,7 @@ export default {
     userlist() {
       //用户列表
     },
-    handleDetail(row) {},
+    handleDetail(row) { },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
     },
@@ -608,6 +489,7 @@ export default {
     text-align: center;
     flex: 1;
   }
+
   .button-container {
     display: flex;
     justify-content: center;
@@ -634,8 +516,10 @@ export default {
     .el-pagination {
       margin-top: 5px;
     }
+
     .el-form-item__label {
-      color: white; /* 设置标签文本颜色为白色 */
+      color: white;
+      /* 设置标签文本颜色为白色 */
     }
   }
 

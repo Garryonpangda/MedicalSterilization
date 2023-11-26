@@ -4,22 +4,13 @@
       <p>组织管理</p>
       <p class="secondtext">组织列表及配置</p>
     </div>
-    <el-dialog
-      title="添加组织"
-      :visible.sync="add_orgnization_page"
-      width="30%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="添加组织" :visible.sync="add_orgnization_page" width="30%" :before-close="handleClose">
       <div>
         <el-form :model="organizationForm" label-width="80px" :rules="rules">
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="名称" prop="name">
-                <el-input
-                  v-model="organizationForm.name"
-                  placeholder="请输入内容"
-                  class="long"
-                ></el-input>
+                <el-input v-model="organizationForm.name" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -27,11 +18,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="联系人">
-                <el-input
-                  v-model="organizationForm.contact"
-                  placeholder="请输入内容"
-                  class="long"
-                ></el-input>
+                <el-input v-model="organizationForm.contact" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -39,11 +26,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="联系方式">
-                <el-input
-                  v-model="organizationForm.phonenumber"
-                  placeholder="请输入内容"
-                  class="long"
-                ></el-input>
+                <el-input v-model="organizationForm.phonenumber" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -51,11 +34,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="地址" prop="locate">
-                <el-input
-                  v-model="organizationForm.locate"
-                  placeholder="请在地图上定位设备地"
-                  class="long"
-                ></el-input>
+                <el-input v-model="organizationForm.locate" placeholder="请在地图上定位设备地" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -63,11 +42,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="备注">
-                <el-input
-                  v-model="organizationForm.remark"
-                  placeholder="请输入内容"
-                  class="long"
-                ></el-input>
+                <el-input v-model="organizationForm.remark" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -75,11 +50,7 @@
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="标识" prop="characteristic">
-                <el-input
-                  v-model="organizationForm.characteristic"
-                  placeholder="请输入内容"
-                  class="long"
-                ></el-input>
+                <el-input v-model="organizationForm.characteristic" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -92,23 +63,14 @@
     </el-dialog>
 
     <!-- 创建账户 -->
-    <el-dialog
-      title="创建组织管理员账户"
-      :visible.sync="add_user_page"
-      width="30%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="创建组织管理员账户" :visible.sync="add_user_page" width="30%" :before-close="handleClose">
       <div>
         <div>
           <el-form :model="userForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="账户名" prop="username">
-                  <el-input
-                    v-model="userForm.username"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="userForm.username" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -116,11 +78,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="密码" prop="password">
-                  <el-input
-                    v-model="userForm.password"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="userForm.password" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -128,11 +86,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="姓名">
-                  <el-input
-                    v-model="userForm.name"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="userForm.name" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -140,11 +94,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="手机号" prop="phonenumber">
-                  <el-input
-                    v-model="userForm.phonenumber"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="userForm.phonenumber" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -152,11 +102,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="邮箱地址">
-                  <el-input
-                    v-model="userForm.email"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="userForm.email" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -177,19 +123,13 @@
           <el-row :gutter="15">
             <el-col :span="8">
               <el-form-item label="名称" class="el_item">
-                <el-input
-                  v-model="searchForm.name"
-                  placeholder="请输入"
-                ></el-input>
+                <el-input v-model="searchForm.name" placeholder="请输入"></el-input>
               </el-form-item>
             </el-col>
 
             <el-col :span="8">
               <el-form-item label="联系电话">
-                <el-input
-                  v-model="searchForm.phone"
-                  placeholder="请输入"
-                ></el-input>
+                <el-input v-model="searchForm.phone" placeholder="请输入"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -198,9 +138,7 @@
               <el-form-item>
                 <el-button type="primary" @click="search">查询</el-button>
                 <el-button @click="reset">重置</el-button>
-                <el-button type="primary" @click="add" class="left"
-                  >新建</el-button
-                >
+                <el-button type="primary" @click="add" class="left">新建</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -209,98 +147,45 @@
 
       <!-- 列表 -->
       <div class="notification-list">
-<<<<<<< HEAD
+
         <el-table :data="notificationList" height="400" style="width: 100%" :header-cell-style="{
           background: '#027DB4',
           color: 'white',
-          textAlign: 'center',
-        }">
-=======
-        <el-table
-          :data="notificationList"
-          height="400"
-          style="width: 100%"
-          :header-cell-style="{
-            background: '#027DB4',
-            color: 'white',
-          }"
-        >
->>>>>>> 79757a30b50f192f12578ce1279c600a718092bd
+          'text-align': 'center',
+        }" :cell-style="{ 'text-align': 'center' }">
+
           <el-table-column type="selection" width="65"></el-table-column>
 
-          <el-table-column
-            prop="orgnization.name"
-            label="名称"
-            width="200"
-          ></el-table-column>
-          <el-table-column
-            prop="orgnization.characteristic"
-            label="标识"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="orgnization.contact"
-            label="联系人信息"
-            width="100"
-          ></el-table-column>
-          <el-table-column
-            prop="orgnization.phonenumber"
-            label="电话"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="orgnization.locate"
-            label="位置"
-            width="283"
-          ></el-table-column>
+          <el-table-column prop="orgnization.name" label="名称" width="200"></el-table-column>
+          <el-table-column prop="orgnization.characteristic" label="标识" width="150"></el-table-column>
+          <el-table-column prop="orgnization.contact" label="联系人信息" width="100"></el-table-column>
+          <el-table-column prop="orgnization.phonenumber" label="电话" width="150"></el-table-column>
+          <el-table-column prop="orgnization.locate" label="位置" width="283"></el-table-column>
 
-          <el-table-column
-            prop="devicenum"
-            label="设备数量"
-            width="100"
-          ></el-table-column>
+          <el-table-column prop="devicenum" label="设备数量" width="100"></el-table-column>
 
           <el-table-column label="其他">
             <template slot-scope="scope">
 
 
-              <el-button
-                @click="authorization(scope.row)"
-                type="text"
-                size="small"
-                >授权码</el-button
-              >
-              <el-button @click="userlist(scope.row)" type="text" size="small"
-                >用户列表</el-button
-              >
-              <el-button
-                @click="handleDetail(scope.row)"
-                type="text"
-                size="small"
-                >详情</el-button
-              >
+              <el-button @click="authorization(scope.row)" type="text" size="small">授权码</el-button>
+              <el-button @click="userlist(scope.row)" type="text" size="small">用户列表</el-button>
+              <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
 
             </template>
           </el-table-column>
         </el-table>
 
         <!-- 分页符 -->
-        <el-pagination
-          :current-page="currentPage"
-          :page-size="pageSize"
-          :total="total"
-          @current-change="handlePageChange"
-        ></el-pagination>
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="total"
+          @current-change="handlePageChange"></el-pagination>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-import { ListAllOrgnization, ListUsersByOrgnizationId, SelectOrgnization, AddOrganization } from "@/utils/api/Mocha_itom/Organization"
-import { CheckUserName } from "@/utils/api/Advanced_setting/ProjectManage"
-=======
+
 import {
   ListAllOrgnization,
   ListUsersByOrgnizationId,
@@ -308,7 +193,7 @@ import {
   AddOrganization,
 } from "@/utils/api/Mocha_itom/Organization";
 import { CheckUserName } from "@/utils/api/Advanced_setting/ProjectManage";
->>>>>>> 79757a30b50f192f12578ce1279c600a718092bd
+
 
 export default {
   data() {
@@ -450,7 +335,7 @@ export default {
         .then((_) => {
           done();
         })
-        .catch((_) => {});
+        .catch((_) => { });
     },
     handleDetail(row) {
       var organizationid = row.orgnization.id;
@@ -479,6 +364,7 @@ export default {
   height: 100%;
   /* 可根据需要设置高度 */
 }
+
 .home_page {
   height: 250vh;
 
@@ -506,7 +392,7 @@ export default {
   .bigbox {
     width: 100%;
     background-color: rgba(1, 84, 120, 1);
-   
+
   }
 
   .notification-box {
@@ -540,8 +426,8 @@ export default {
       width: 300px;
     }
 
-   
-   
+
+
   }
 
   .notification-list {

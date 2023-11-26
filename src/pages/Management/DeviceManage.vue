@@ -83,6 +83,18 @@
 
     <!-- 顶部盒子 -->
     <div class="bigbox">
+      <el-dialog title="设备信息" :visible.sync="deviceVisible" width="30%" :before-close="closedevice">
+        <div>
+          qwe
+        </div>
+        <el-image style="width: 100px; height: 100px" src="../../assets/img/u169.png" fit="contain"></el-image>
+        <el-divider></el-divider>
+        <el-divider></el-divider>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
       <!-- 搜索条件 -->
       <div class="search-box">
         <el-form :model="searchForm" label-width="100px">
@@ -147,14 +159,14 @@
         <el-table :data="notificationList" height="350" style="width: 100%" :header-cell-style="{
           background: '#027DB4',
           color: 'white',
-          textAlign: 'center',
+          'text-align': 'center',
 
-        }">
+        }" :cell-style="{ 'text-align': 'center' }">
           <el-table-column type="selection" width="65"></el-table-column>
           <el-table-column prop="device.sn" label="SN码" width="150"></el-table-column>
           <el-table-column prop="device.deviceName" label="名称" width="120"></el-table-column>
           <el-table-column prop="device.attribute" label="属性" width="90">
-            <template slot-scope="scope">
+            <template slot-scope="scope" class="center">
               <span v-if="scope.row.device.attribute === 0">已激活</span>
               <span v-else-if="scope.row.device.attribute === 1">未激活</span>
               <span v-else-if="scope.row.device.attribute === 2">初始</span>
@@ -169,10 +181,10 @@
           <el-table-column prop="orgnizationname" label="组织" width="233"></el-table-column>
           <el-table-column prop="device.cout" label="使用次数" width="100"></el-table-column>
           <el-table-column prop="device.duration" label="使用时长(秒)" width="120"></el-table-column>
-          <el-table-column prop="device.cout" label="预计次数" width="100"></el-table-column>
+          <el-table-column label="预计次数" width="100">5000</el-table-column>
 
           <el-table-column label="其他">
-            <template slot-scope="scope" >
+            <template slot-scope="scope">
               <div class="button-container">
                 <el-button @click="userecord(scope.row)" type="text" size="small">使用记录</el-button>
                 <el-button @click="mianrecord(scope.row)" type="text" size="small">维护记录</el-button>
@@ -193,10 +205,12 @@
 <script>
 import { ListAllOrgnization, SelectDevice, ListDevice, AddDevice } from "@/utils/api/Mocha_itom/DeviceManage"
 import { useUserStore } from "@/stores/user"
+
 export default {
   data() {
     return {
       active: 0,
+      deviceVisible: false,
       searchForm: {
         sn: null,
         organizationid: null,
@@ -356,6 +370,9 @@ export default {
         this.active = 0;
       }
     },
+    closedevice() {
+      this.deviceVisible = false
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
@@ -411,7 +428,10 @@ export default {
       // 批量添加逻辑
       this.addsVisible = true;
     },
-    handleDetail(row) { },
+    handleDetail(row) {
+      console.log("click");
+      this.deviceVisible = true
+    },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
     },
@@ -461,6 +481,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.center {
+  text-align: center !important;
+}
+
 .button-container {
   display: flex;
   align-items: center;

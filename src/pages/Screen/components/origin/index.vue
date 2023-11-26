@@ -2,26 +2,26 @@
   <div class="box6">
     <div class="title">
       <img src="@/assets/img/setting.png"  />
-      <p>维保情况</p>
+      <p>使用情况</p>
     </div>
     <div class="data-group">
       <div class="data-box">
-        <p class="data-title1">工单总数</p>
-        <p class="data-value1">4590项</p>
+        <p class="data-title1">今日次数</p>
+        <p class="data-value1">20000次</p>
       </div>
       <div class="data-box">
-        <p class="data-title2">已完成</p>
-        <p class="data-value2">4506项</p>
+        <p class="data-title2">单日平均次数</p>
+        <p class="data-value2">40000次</p>
       </div>
     </div>
     <div class="data-group">
       <div class="data-box">
-        <p class="data-title3">处理中</p>
-        <p class="data-value3">80项</p>
+        <p class="data-title3">累计次数</p>
+        <p class="data-value3">2023112次</p>
       </div>
       <div class="data-box">
-        <p class="data-title4">待处理</p>
-        <p class="data-value4">4项</p>
+        <p class="data-title4">累计时间</p>
+        <p class="data-value4">2123123123秒</p>
       </div>
     </div>
     <el-divider></el-divider>

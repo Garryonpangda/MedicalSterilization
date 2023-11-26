@@ -1,24 +1,14 @@
 <template>
   <div class="notification-page">
     <!-- 创建项目 -->
-    <el-dialog
-      title="添加项目"
-      :visible.sync="firstpage"
-      width="30%"
-      :before-close="handleClose"
-      status-icon
-    >
+    <el-dialog title="添加项目" :visible.sync="firstpage" width="30%" :before-close="handleClose" status-icon>
       <div>
         <div>
           <el-form :model="projectForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="项目ID" prop="projectId">
-                  <el-input
-                    v-model="projectForm.projectId"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="projectForm.projectId" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -26,11 +16,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="项目名称" prop="projectName">
-                  <el-input
-                    v-model="projectForm.projectName"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="projectForm.projectName" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -38,11 +24,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="说明">
-                  <el-input
-                    v-model="projectForm.remark"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="projectForm.remark" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -56,23 +38,14 @@
     </el-dialog>
 
     <!-- 创建账户 -->
-    <el-dialog
-      title="创建初始账户"
-      :visible.sync="secondpage"
-      width="30%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="创建初始账户" :visible.sync="secondpage" width="30%" :before-close="handleClose">
       <div>
         <div>
           <el-form :model="acForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="账户名" prop="username">
-                  <el-input
-                    v-model="acForm.username"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="acForm.username" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -80,11 +53,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="密码" prop="pwd">
-                  <el-input
-                    v-model="acForm.password"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="acForm.password" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -92,11 +61,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="姓名">
-                  <el-input
-                    v-model="acForm.name"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="acForm.name" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -104,11 +69,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="手机号" prop="phone">
-                  <el-input
-                    v-model="acForm.phonenumber"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="acForm.phonenumber" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -116,11 +77,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="邮箱地址">
-                  <el-input
-                    v-model="acForm.email"
-                    placeholder="请输入"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="acForm.email" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -135,12 +92,7 @@
     </el-dialog>
 
     <!-- 编辑项目 -->
-    <el-dialog
-      title="编辑项目"
-      :visible.sync="editpage"
-      width="30%"
-      :before-close="handleClose"
-    >
+    <el-dialog title="编辑项目" :visible.sync="editpage" width="30%" :before-close="handleClose">
       <div>
         <div>
           <el-form :model="editproject" label-width="80px">
@@ -156,10 +108,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="项目名称">
-                  <el-input
-                    v-model="editproject.projectName"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="editproject.projectName" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -167,10 +116,7 @@
             <el-row :gutter="15">
               <el-col :span="400">
                 <el-form-item label="说明">
-                  <el-input
-                    v-model="editproject.remark"
-                    class="long"
-                  ></el-input>
+                  <el-input v-model="editproject.remark" class="long"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -178,9 +124,7 @@
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button type="danger" @click="deleteproject">移除项目</el-button>
-          <el-button type="primary" @click="edit_finish" class="right"
-            >完成</el-button
-          >
+          <el-button type="primary" @click="edit_finish" class="right">完成</el-button>
           <el-button @click="editpage = false" class="right">取消</el-button>
         </span>
       </div>
@@ -200,9 +144,7 @@
           <el-row :gutter="10">
             <el-col :span="12">
               <el-form-item>
-                <el-button type="primary" @click="add" class="new"
-                  >新建</el-button
-                >
+                <el-button type="primary" @click="add" class="new">新建</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -211,62 +153,31 @@
 
       <!-- 列表 -->
       <div class="notification-list">
-        <el-table
-          :data="notificationList"
-          :height="400"
-          style="width: 100%"
-          :header-cell-style="{
-            background: '#027DB4',
-            color: 'white',
-            textAlign: 'center',
-          }"
-        >
+        <el-table :data="notificationList" :height="400" style="width: 100%" :header-cell-style="{
+          background: '#027DB4',
+          color: 'white',
+          textAlign: 'center',
+        }" :cell-style="{ 'text-align': 'center' }">
           <el-table-column type="selection" width="65"></el-table-column>
 
-          <el-table-column
-            prop="projectId"
-            label="项目ID"
-            width="200"
-          ></el-table-column>
-          <el-table-column
-            prop="projectName"
-            label="项目名称"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="remark"
-            label="说明"
-            width="250"
-          ></el-table-column>
-          <el-table-column
-            prop="creatTime"
-            label="创建时间"
-            width="150"
-          ></el-table-column>
-          <el-table-column
-            prop="updateTime"
-            label="更新时间"
-            width="283"
-          ></el-table-column>
+          <el-table-column prop="projectId" label="项目ID" width="200"></el-table-column>
+          <el-table-column prop="projectName" label="项目名称" width="150"></el-table-column>
+          <el-table-column prop="remark" label="说明" width="250"></el-table-column>
+          <el-table-column prop="creatTime" label="创建时间" width="150"></el-table-column>
+          <el-table-column prop="updateTime" label="更新时间" width="283"></el-table-column>
 
           <el-table-column label="其他">
             <template slot-scope="scope">
               <div class="button-container">
-                <el-button @click="edit(scope.row)" type="text" size="small"
-                  >编辑</el-button
-                >
+                <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
               </div>
             </template>
           </el-table-column>
         </el-table>
 
         <!-- 分页符 -->
-        <el-pagination
-          :current-page="currentPage"
-          :page-size="pageSize"
-          :total="total"
-          @current-change="handlePageChange"
-        ></el-pagination>
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="total"
+          @current-change="handlePageChange"></el-pagination>
       </div>
     </div>
   </div>
@@ -532,7 +443,7 @@ export default {
         .then((_) => {
           done();
         })
-        .catch((_) => {});
+        .catch((_) => { });
     },
     finish() {
       var data = JSON.stringify({
@@ -581,7 +492,7 @@ export default {
     userlist() {
       //用户列表
     },
-    handleDetail(row) {},
+    handleDetail(row) { },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
     },
@@ -666,18 +577,23 @@ export default {
       margin-top: 5px;
     }
   }
+
   .button-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%; /* 可根据需要设置高度 */
+    height: 100%;
+    /* 可根据需要设置高度 */
   }
+
   .button-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%; /* 可根据需要设置高度 */
+    height: 100%;
+    /* 可根据需要设置高度 */
   }
+
   .right {
     float: right;
   }

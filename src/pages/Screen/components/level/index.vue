@@ -6,7 +6,7 @@
           src="@/assets/img/setting.png" 
             class="maintenance-icon"
           />
-          <p class="maintenance-text">上报记录</p>
+          <p class="maintenance-text">维保提示</p>
         </div>
 
         <div
