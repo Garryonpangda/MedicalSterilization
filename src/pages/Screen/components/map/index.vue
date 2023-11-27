@@ -21,6 +21,7 @@
 </template>
 <script>
 import chinaJson from "../../../../../node_modules/echarts/map/json/china.json";
+import {getDeviceCountByProvince } from "@/utils/api/System_Api/System_Api"
 export default {
   data() {
     return {
@@ -48,32 +49,8 @@ export default {
 
         // ...更多维护信息...
       ],
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕",
-        },
-        {
-          value: "选项2",
-          label: "双皮奶",
-        },
-      ],
-      value: "",
-    };
-  },
-  mounted() {
-    this.chinaEcharts();
-  },
-  methods: {
-    chinaEcharts() {
-      //1.注册一个地图
-      this.$echarts.registerMap("china", chinaJson);
 
-      //2.初始化echarts
-      let myChart = this.$echarts.init(this.$refs.myEcharts);
-
-      // 3.准备数据
-      var data = [
+      data:[
         { name: "北京", value: 177 },
         { name: "天津", value: 42 },
         { name: "河北", value: 102 },
@@ -105,7 +82,40 @@ export default {
         { name: "广东", value: 123 },
         { name: "广西", value: 59 },
         { name: "海南", value: 14 },
-      ];
+      ],
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕",
+        },
+        {
+          value: "选项2",
+          label: "双皮奶",
+        },
+      ],
+      value: "",
+    };
+  },
+  async mounted() {
+    var res = await getDeviceCountByProvince()
+      if (res.code == 200) {
+        this.data=res.data
+      }
+      console.log(res);
+    this.chinaEcharts();
+  },
+  methods: {
+    chinaEcharts() {
+      //1.注册一个地图
+      this.$echarts.registerMap("china", chinaJson);
+
+      //2.初始化echarts
+      let myChart = this.$echarts.init(this.$refs.myEcharts);
+
+      // 3.准备数据
+      console.log("this.data");
+      console.log(this.data);
+      var data = this.data
       var geoCoordMap = {
         上海: [121.472644, 31.231706],
         云南: [102.712251, 25.040609],
