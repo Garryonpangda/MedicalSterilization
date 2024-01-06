@@ -91,13 +91,13 @@
         <el-divider></el-divider>
         <el-divider></el-divider>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button @click="deviceVisible = false">取 消</el-button>
+          <el-button type="primary" @click="devicesure">确 定</el-button>
         </span>
       </el-dialog>
       <!-- 搜索条件 -->
-      <div class="search-box">
-        <el-form :model="searchForm" label-width="100px">
+      <div class="search-box white" >
+        <el-form :model="searchForm" label-width="100px"> 
           <el-row :gutter="15">
             <el-col :span="6">
               <el-form-item label="SN码">
@@ -353,6 +353,9 @@ export default {
     };
   },
   methods: {
+    devicesure(){
+      this.deviceVisible=false
+    },
     previous() {
       console.log(this.active)
       if (this.active-- < 2) {
@@ -395,8 +398,6 @@ export default {
 
     addsfinish() {
       //处理添加逻辑
-
-
       this.addsVisible = false;
 
     },

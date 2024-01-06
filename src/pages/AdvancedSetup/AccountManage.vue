@@ -139,7 +139,7 @@
     <transition name="slide">
       <div class="bigbox">
         <!-- 搜索条件 -->
-        <div class="search-box">
+        <div class="search-box white">
           <el-form :model="searchForm" label-width="100px">
             <el-row :gutter="15">
               <el-col :span="8">

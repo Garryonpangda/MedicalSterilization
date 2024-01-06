@@ -141,25 +141,31 @@ export default {
 
 
       console.log("验证码", this.form.code);
-      const res = await doLogin(this.form.name, this.form.password, this.form.code, this.form.remember)
-      console.log(res)
-      if (res.code == 20010) {
-        const res = await getVerifyCode(2)
-        this.img = res.data
-        this.$message.error("验证码错误");
 
-      } else if (res.code == 20050) {
-        this.$message.error("账号或密码错误");
-      } else if (res.code == 20011) {
-        this.$message.success("登录成功");
-        userStore.updateUserInfo(res.data)
-        var userrole = userStore.setRole()
+      if (this.form.name == "" || this.form.password == "") {
+        this.$message.error("请输入账号和密码");
+      } else {
+        const res = await doLogin(this.form.name, this.form.password, this.form.code, this.form.remember)
+        console.log(res)
+        if (res.code == 20010) {
+          const res = await getVerifyCode(2)
+          this.img = res.data
+          this.$message.error("验证码错误");
 
-        this.$router.push("/home/screen");
+        } else if (res.code == 20050) {
+          this.$message.error("账号或密码错误");
+        } else if (res.code == 20011) {
+          this.$message.success("登录成功");
+          userStore.updateUserInfo(res.data)
+          var userrole = userStore.setRole()
+
+          this.$router.push("/home/screen");
+        }
       }
 
 
-      
+
+
     },
     sendVerificationCode() { },
     startCountdown() {
@@ -237,7 +243,7 @@ export default {
   width: 400px;
   padding: 40px;
   left: 540px;
- 
+
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   text-align: center;

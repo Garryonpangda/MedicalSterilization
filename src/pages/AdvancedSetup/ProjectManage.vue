@@ -2,7 +2,7 @@
   <div class="notification-page">
     <!-- 创建项目 -->
     <el-dialog title="添加项目" :visible.sync="firstpage" width="30%" :before-close="handleClose" status-icon>
-      <div>
+      <div class>
         <div>
           <el-form :model="projectForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
@@ -139,7 +139,7 @@
     <!-- 顶部盒子 -->
     <div class="bigbox">
       <!-- 搜索条件 -->
-      <div class="search-box">
+      <div class="search-box white">
         <el-form :model="searchForm" label-width="100px">
           <el-row :gutter="10">
             <el-col :span="12">

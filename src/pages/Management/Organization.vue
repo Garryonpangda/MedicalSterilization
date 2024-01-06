@@ -5,8 +5,8 @@
       <p class="secondtext">组织列表及配置</p>
     </div>
     <el-dialog title="添加组织" :visible.sync="add_orgnization_page" width="30%" :before-close="handleClose">
-      <div>
-        <el-form :model="organizationForm" label-width="80px" :rules="rules">
+      <div >
+        <el-form :model="organizationForm" label-width="80px" :rules="rules" >
           <el-row :gutter="15">
             <el-col :span="400">
               <el-form-item label="名称" prop="name">
@@ -118,11 +118,11 @@
     <!-- 顶部盒子 -->
     <div class="bigbox">
       <!-- 搜索条件 -->
-      <div class="search-box">
+      <div class="search-box white" >
         <el-form :model="searchForm" label-width="100px">
           <el-row :gutter="15">
             <el-col :span="8">
-              <el-form-item label="名称" class="el_item">
+              <el-form-item label="名称" class="el_item" >
                 <el-input v-model="searchForm.name" placeholder="请输入"></el-input>
               </el-form-item>
             </el-col>
@@ -364,7 +364,9 @@ export default {
   height: 100%;
   /* 可根据需要设置高度 */
 }
-
+.black{
+  color: black !important;
+}
 .home_page {
   height: 250vh;
 
@@ -421,6 +423,7 @@ export default {
 
   .search-box {
     margin-top: 10px;
+    
 
     .el-input {
       width: 300px;

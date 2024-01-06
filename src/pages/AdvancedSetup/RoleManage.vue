@@ -136,7 +136,7 @@
     <!-- 顶部盒子 -->
     <div class="bigbox">
       <!-- 搜索条件 -->
-      <div class="search-box">
+      <div class="search-box white">
         <el-form :model="searchForm" label-width="100px">
           <el-row v-if="isHW" :gutter="15">
             <el-col :span="10">

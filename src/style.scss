@@ -1,13 +1,17 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-html,body,#app{
+
+html,
+body,
+#app {
     width: 100vw;
     height: 100vh;
 }
 
-em,i {
+em,
+i {
     font-style: normal;
 }
 
@@ -15,12 +19,16 @@ li {
     list-style: none;
 }
 
+
 /*去掉表单自带的边框*/
+
 input {
     outline: none;
 }
 
+
 /*去掉文本域自带的边框和可拉伸*/
+
 textarea {
     outline: none;
     resize: none;
@@ -31,38 +39,45 @@ a {
     text-decoration: none;
 }
 
+
 /* 清除浮动 */
-.clearfix:after{
-	content:"";
-	display:block;
-	height:0;
-	clear:both;
-	visibility:hidden;
+
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
 .clearfix {
-	*zoom:1;
+    *zoom: 1;
 }
 
-.flex{
+.flex {
     display: flex;
 }
 
-.bgcolor{
+.bgcolor {
     background-color: #409EFF;
 }
 
-.fontcolor{
+.fontcolor {
     color: #409EFF;
 }
 
-.vertical_line{
+.vertical_line {
     width: 2px;
     height: 30px;
     background-color: #fff;
     margin: 0 10px;
 }
-.el-form-item__label{
+
+.el-form-item__label {
+    // color: rgb(252, 249, 249);
+    font-size: 14px;
+}
+
+.white .el-form-item__label {
     color: rgb(252, 249, 249);
-    font-size: 15px;
 }
