@@ -1,36 +1,71 @@
 <template>
   <div class="box6">
     <div class="title">
-      <img src="@/assets/img/setting.png"  />
+      <img src="@/assets/img/setting.png" />
       <p>设备情况</p>
     </div>
     <div class="data-group">
       <div class="data-box">
         <p class="data-title1">设备总数</p>
-        <p class="data-value1">100个</p>
+        <p class="data-value1">{{deivce_number.device_count}}个</p>
       </div>
       <div class="data-box">
         <p class="data-title2">在线设备</p>
-        <p class="data-value2">80个</p>
+        <p class="data-value2">{{deivce_number.device_online_count}}个</p>
       </div>
     </div>
     <div class="data-group">
       <div class="data-box">
         <p class="data-title3">离线设备</p>
-        <p class="data-value3">10个</p>
+        <p class="data-value3">{{deivce_number.device_notonline_count}}个</p>
       </div>
       <div class="data-box">
         <p class="data-title4">故障设备</p>
-        <p class="data-value4">10个</p>
+        <p class="data-value4">{{deivce_number.device_error_count}}个</p>
       </div>
     </div>
     <el-divider></el-divider>
-    <p class="update-time">更新时间：2023-08-11 15:30</p>
+    <p class="update-time">更新时间：{{ time }}</p>
   </div>
 </template>
 
 <script>
-// ... Your script
+import {EquipmentCondition} from "@/utils/api/System_Api/System_Api"
+export default {
+  data() {
+    return {
+      time: null,
+      deivce_number: {
+        "device_online_count": 4,
+        "device_notonline_count": 1,
+        "device_error_count": 1,
+        "device_count": 6
+      }
+    };
+  },
+  async created() {
+    this.time = this.getCurrentDateTimeString()
+    var res = await EquipmentCondition()
+    if (res.code == 200) {
+      this.deivce_number = res.data
+    }
+    console.log(res);
+  },
+
+  methods: {
+    getCurrentDateTimeString() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    },
+  }
+
+}
 </script>
 
 <style scoped lang="scss">
@@ -72,20 +107,25 @@
       margin-left: 40px;
       text-rendering: optimizeLegibility
     }
-  .data-title2,
+
+    .data-title2,
     .data-title4 {
       color: rgb(255, 255, 255);
       font-size: 23px;
       margin-right: 40px;
       text-rendering: optimizeLegibility
     }
-    .data-value1,.data-value3 {
+
+    .data-value1,
+    .data-value3 {
       color: rgb(0, 180, 255);
       font-size: 24px;
       margin-top: 5px;
       margin-left: 20px;
     }
-      .data-value2,.data-value4 {
+
+    .data-value2,
+    .data-value4 {
       color: rgb(0, 180, 255);
       font-size: 24px;
       margin-top: 5px;

@@ -18,6 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .home_page {
+  background-color: #027db4 !important;
   height: 100vh;
   overflow: auto; /* 添加滚动条 */
   .background-carousel {

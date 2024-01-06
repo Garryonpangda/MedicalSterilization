@@ -140,7 +140,7 @@ export default {
       const userStore = useUserStore()
 
 
-console.log("验证码",this.form.code);
+      console.log("验证码", this.form.code);
       const res = await doLogin(this.form.name, this.form.password, this.form.code, this.form.remember)
       console.log(res)
       if (res.code == 20010) {
@@ -153,23 +153,13 @@ console.log("验证码",this.form.code);
       } else if (res.code == 20011) {
         this.$message.success("登录成功");
         userStore.updateUserInfo(res.data)
-        var userrole=userStore.setRole()
-        
+        var userrole = userStore.setRole()
+
         this.$router.push("/home/screen");
       }
 
 
-      // 处理登录成功的其他逻辑
-
-      //   var username = localStorage.getItem("TOKEN");
-      //   console.log("ffff", username);
-      //   var username2 = Cookies.get("HMACCOUNT_BFESS");
-      //   console.log("-------", username2);
-      //   this.$router.push("/home/firstpage");
-      // } else {
-
-      //   return;
-      // }
+      
     },
     sendVerificationCode() { },
     startCountdown() {

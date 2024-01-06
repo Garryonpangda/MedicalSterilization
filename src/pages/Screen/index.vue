@@ -1,5 +1,5 @@
-<template>
-  <div class="container">
+<template class="back">
+  <div class="container ">
     <!-- 数据大屏展示内容区域 -->
     <div class="screen" ref="screen">
       <!-- 数据大屏顶部 -->
@@ -76,8 +76,12 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.back{
+  background-color: #027db4;
+}
 .home_page {
   height: 250vh;
+  background-color: #027db4 !important;
 .container {
   position: relative;
   width: 100%;

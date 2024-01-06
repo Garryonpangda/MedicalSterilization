@@ -112,6 +112,7 @@
 
     <!-- 顶部盒子 -->
     <div class="bigbox">
+<<<<<<< HEAD
       <el-dialog
         title="设备详情"
         :visible.sync="detailVisible"
@@ -214,6 +215,20 @@
         </template>
       </el-dialog>
 
+=======
+      <el-dialog title="设备信息" :visible.sync="deviceVisible" width="30%" :before-close="closedevice">
+        <div>
+          qwe
+        </div>
+        <el-image style="width: 100px; height: 100px" src="../../assets/img/u169.png" fit="contain"></el-image>
+        <el-divider></el-divider>
+        <el-divider></el-divider>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
+>>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
       <!-- 搜索条件 -->
       <div class="search-box">
         <el-form :model="searchForm" label-width="100px">
@@ -292,6 +307,7 @@
 
       <!-- 列表 -->
       <div class="notification-list">
+<<<<<<< HEAD
         <el-table
           :data="notificationList"
           height="350"
@@ -301,6 +317,14 @@
             color: 'white',
           }"
         >
+=======
+        <el-table :data="notificationList" height="350" style="width: 100%" :header-cell-style="{
+          background: '#027DB4',
+          color: 'white',
+          'text-align': 'center',
+
+        }" :cell-style="{ 'text-align': 'center' }">
+>>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
           <el-table-column type="selection" width="65"></el-table-column>
           <el-table-column
             prop="device.sn"
@@ -313,7 +337,7 @@
             width="120"
           ></el-table-column>
           <el-table-column prop="device.attribute" label="属性" width="90">
-            <template slot-scope="scope">
+            <template slot-scope="scope" class="center">
               <span v-if="scope.row.device.attribute === 0">已激活</span>
               <span v-else-if="scope.row.device.attribute === 1">未激活</span>
               <span v-else-if="scope.row.device.attribute === 2">初始</span>
@@ -325,6 +349,7 @@
               <span v-else-if="scope.row.device.status === 1">在线</span>
             </template>
           </el-table-column>
+<<<<<<< HEAD
           <el-table-column
             prop="orgnizationname"
             label="组织"
@@ -360,6 +385,20 @@
                 size="small"
                 >详情</el-button
               >
+=======
+          <el-table-column prop="orgnizationname" label="组织" width="233"></el-table-column>
+          <el-table-column prop="device.cout" label="使用次数" width="100"></el-table-column>
+          <el-table-column prop="device.duration" label="使用时长(秒)" width="120"></el-table-column>
+          <el-table-column label="预计次数" width="100">5000</el-table-column>
+
+          <el-table-column label="其他">
+            <template slot-scope="scope">
+              <div class="button-container">
+                <el-button @click="userecord(scope.row)" type="text" size="small">使用记录</el-button>
+                <el-button @click="mianrecord(scope.row)" type="text" size="small">维护记录</el-button>
+                <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+              </div>
+>>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
             </template>
           </el-table-column>
         </el-table>
@@ -377,6 +416,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import {
   ListAllOrgnization,
   SelectDevice,
@@ -384,10 +424,16 @@ import {
   AddDevice,
 } from "@/utils/api/Mocha_itom/DeviceManage";
 import { useUserStore } from "@/stores/user";
+=======
+import { ListAllOrgnization, SelectDevice, ListDevice, AddDevice } from "@/utils/api/Mocha_itom/DeviceManage"
+import { useUserStore } from "@/stores/user"
+
+>>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
 export default {
   data() {
     return {
       active: 0,
+      deviceVisible: false,
       searchForm: {
         sn: null,
         organizationid: null,
@@ -573,6 +619,9 @@ export default {
         this.active = 0;
       }
     },
+    closedevice() {
+      this.deviceVisible = false
+    },
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then((_) => {
@@ -624,8 +673,13 @@ export default {
       this.addsVisible = true;
     },
     handleDetail(row) {
+<<<<<<< HEAD
       this.selectedDevice = row;
       this.detailVisible = true;
+=======
+      console.log("click");
+      this.deviceVisible = true
+>>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
     },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
@@ -673,6 +727,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.center {
+  text-align: center !important;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  /* 可根据需要设置高度 */
+}
+
 .home_page {
   height: 250vh;
 

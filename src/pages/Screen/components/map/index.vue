@@ -1,43 +1,34 @@
 <template>
   <div class="echartsMapAllDemo">
     <!-- style的宽高一定要写，不写也不会展示echarts图 -->
-    <div
-      id="myEcharts"
-      ref="myEcharts"
-      style="width: 900px; height: 100vh; "
-    ></div>
-    <div class="secondBox">
-      <div class="Tip-title">
+    <div id="myEcharts" ref="myEcharts" style="width: 900px; height: 100vh; "></div>
+    <!-- <div class="secondBox"> -->
+      <!-- <div class="Tip-title">
         <img src="@/assets/img/setting.png" class="Tip-icon" />
         <p class="Tip-text">维护提示</p>
       </div>
       <div class="smallbox">
-          <div
-          class="info-box"
-          v-for="(item, index) in maintenanceInfo"
-          :key="index"
-        >
+        <div class="info-box" v-for="(item, index) in maintenanceInfo" :key="index">
           <div class="info-content">
             <p class="info-text">{{ item.content }}</p>
             <p class="info-time">{{ item.time }}</p>
           </div>
-          <router-link :to="'/home/malfunction'" class="info-detail"
-            >详情</router-link
-          >
+          <router-link :to="'/home/malfunction'" class="info-detail">详情</router-link>
         </div>
-        </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
   </div>
 </template>
 <script>
 import chinaJson from "../../../../../node_modules/echarts/map/json/china.json";
+import {getDeviceCountByProvince } from "@/utils/api/System_Api/System_Api"
 export default {
   data() {
     return {
       // ...其他数据
       selectedRange: "", // 选择的数据统计范围
       echartsInstance: null, // echarts实例
-    
+
       maintenanceInfo: [
         {
           id: 1,
@@ -49,41 +40,17 @@ export default {
           content: "设备B维护计划已更新",
           time: "2023-08-14 14:30",
         },
-       
-          {
+
+        {
           id: 3,
           content: "设备B维护计划已更新",
           time: "2023-08-14 14:30",
         },
-     
+
         // ...更多维护信息...
       ],
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕",
-        },
-        {
-          value: "选项2",
-          label: "双皮奶",
-        },
-      ],
-      value: "",
-    };
-  },
-  mounted() {
-    this.chinaEcharts();
-  },
-  methods: {
-    chinaEcharts() {
-      //1.注册一个地图
-      this.$echarts.registerMap("china", chinaJson);
 
-      //2.初始化echarts
-      let myChart = this.$echarts.init(this.$refs.myEcharts);
-
-      // 3.准备数据
-      var data = [
+      data:[
         { name: "北京", value: 177 },
         { name: "天津", value: 42 },
         { name: "河北", value: 102 },
@@ -115,7 +82,40 @@ export default {
         { name: "广东", value: 123 },
         { name: "广西", value: 59 },
         { name: "海南", value: 14 },
-      ];
+      ],
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕",
+        },
+        {
+          value: "选项2",
+          label: "双皮奶",
+        },
+      ],
+      value: "",
+    };
+  },
+  async mounted() {
+    var res = await getDeviceCountByProvince()
+      if (res.code == 200) {
+        this.data=res.data
+      }
+      console.log(res);
+    this.chinaEcharts();
+  },
+  methods: {
+    chinaEcharts() {
+      //1.注册一个地图
+      this.$echarts.registerMap("china", chinaJson);
+
+      //2.初始化echarts
+      let myChart = this.$echarts.init(this.$refs.myEcharts);
+
+      // 3.准备数据
+      console.log("this.data");
+      console.log(this.data);
+      var data = this.data
       var geoCoordMap = {
         上海: [121.472644, 31.231706],
         云南: [102.712251, 25.040609],
@@ -253,59 +253,65 @@ export default {
 <style lang="less">
 .home_page {
   height: 150vh;
-.secondBox {
-  position: absolute;
-  width: 800px;
-  height: 185px;
-  background-color: #047dad;
-}
-.Tip-icon {
- position: fixed;
-  width: 30px;
-  height: 30px;
-  margin-right: 5px;
-  margin-top: 10px;
-}
-.Tip-text {
-position: absolute;
-  margin-top:10px;
-  margin-left: 30px;
-  font-size: 26px;
-  font-weight: bold;
-  color: white;
-}
 
-.smallbox{
-  margin-top: 50px;
-}
-.info-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: white;
-}
+  .secondBox {
+    position: absolute;
+    width: 800px;
+    height: 185px;
+    background-color: #047dad;
+  }
+
+  .Tip-icon {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: 10px;
+  }
+
+  .Tip-text {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .smallbox {
+    margin-top: 50px;
+  }
+
+  .info-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+  }
 
 
 
-.info-detail {
-  color: rgb(103, 199, 244);
-  text-decoration: none;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 10px;
-}
-.info-text{
-  color: rgb(252, 64, 64);
-}
-.info-time{
+  .info-detail {
+    color: rgb(103, 199, 244);
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 10px;
+  }
 
-  
-  font-size: 10px;
-}
+  .info-text {
+    color: rgb(252, 64, 64);
+  }
+
+  .info-time {
+
+
+    font-size: 10px;
+  }
 }
 </style>
 

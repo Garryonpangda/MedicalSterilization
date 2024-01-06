@@ -28,6 +28,7 @@ export default {
 <style scoped lang="scss">
 .home_page {
   height: 100vh;
+  background-color: #027db4 !important;
 
   aside {
     height: 100%;

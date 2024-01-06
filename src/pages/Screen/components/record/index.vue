@@ -6,7 +6,7 @@
            src="../../assets/img/setting.png"
             class="maintenance-icon"
           />
-          <p class="maintenance-text">维护提示hhhhh</p>
+          <p class="maintenance-text">维护提示</p>
         </div>
 
         <div
