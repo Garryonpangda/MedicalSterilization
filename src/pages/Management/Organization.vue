@@ -9,7 +9,7 @@
         <el-form :model="organizationForm" label-width="80px" :rules="rules">
           <el-row :gutter="15">
             <el-col :span="400">
-              <el-form-item label="名称" prop="name">
+              <el-form-item label="名称" prop="name" class="input1">
                 <el-input v-model="organizationForm.name" placeholder="请输入内容" class="long"></el-input>
               </el-form-item>
             </el-col>
@@ -69,7 +69,7 @@
           <el-form :model="userForm" label-width="80px" :rules="rules">
             <el-row :gutter="15">
               <el-col :span="400">
-                <el-form-item label="账户名" prop="username">
+                <el-form-item label="账户名" prop="username" >
                   <el-input v-model="userForm.username" placeholder="请输入" class="long"></el-input>
                 </el-form-item>
               </el-col>
@@ -444,4 +444,5 @@ export default {
     margin-left: 80px;
   }
 }
+
 </style>

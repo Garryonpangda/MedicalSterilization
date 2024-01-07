@@ -63,6 +63,9 @@ a {
     margin: 0 10px;
 }
 .el-form-item__label{
-    color: rgb(252, 249, 249);
+    color: rgb(61, 59, 59);
     font-size: 15px;
+}
+.input1 .el-form-item__label {
+    color: red;
 }

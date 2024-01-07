@@ -112,7 +112,6 @@
 
     <!-- 顶部盒子 -->
     <div class="bigbox">
-<<<<<<< HEAD
       <el-dialog
         title="设备详情"
         :visible.sync="detailVisible"
@@ -142,63 +141,63 @@
               }}
             </p>
           </div>
-<!-- 第二个小盒子 -->
-<div class="detail-box with-border" style="text-align: center; display: flex; justify-content: space-between; align-items: center; flex-direction: column;">
-  <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div >
-      <p>属性<br/> <strong>{{ mockDevice.attribute === 0 ? "已激活" : mockDevice.attribute === 1 ? "未激活" : "初始" }}</strong></p>
-    </div>
-    <div style="margin-left:120px">
-      <p>组织 <br/><strong>{{ mockDevice.organization }}</strong></p>
-    </div>
-  </div>
-  <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div >
-      <p>今日消杀次数<br/> <strong>{{ mockDevice.count }}</strong></p>
-    </div>
-    <div style="margin-left:80px">
-      <p>今日消杀时间（秒）<br/><strong>{{ mockDevice.time}}</strong> </p>
-    </div>
-  </div>
-    <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div >
-      <p>累计消杀次数<br/><strong> {{ mockDevice.countAll }}</strong></p>
-    </div>
-    <div style="margin-left:80px">
-      <p>累计消杀时间（秒） <br/><strong>{{ mockDevice.timeAll}}</strong></p>
-    </div>
-  </div>
-      <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div >
-      <p>平均消杀次数<br/><strong> {{ mockDevice.averageCount }}</strong></p>
-    </div>
-    <div style="margin-left:80px">
-      <p>平均消杀时间（秒）<br/><strong>{{ mockDevice.averageTime}}</strong> </p>
-    </div>
-  </div>
-  
-</div>
-
-          <!-- 第三个小盒子 -->
-    <div class="detail-box with-border" style="text-align: center">
-      <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div >
-     <p>下一维护时长寿命<br/><strong> {{ mockDevice.lifespan }}</strong></p>
-    </div>
-    <div style="margin-left:80px">
-     <p>预计维保日期<br/><strong> {{ mockDevice.date }}</strong></p>
-    </div>
-  </div>
-    <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
-    <div >
-     <p>维保人员<br/> <strong> {{ mockDevice.maintenancePerson }}</strong></p>
-    </div>
-    <div style="margin-left:120px">
-     <p>联系电话<br/><strong> {{ mockDevice.maintenancePhone }}</strong></p>
-    </div>
-  </div>
-       
+          <!-- 第二个小盒子 -->
+          <div class="detail-box with-border" style="text-align: center; display: flex; justify-content: space-between; align-items: center; flex-direction: column;">
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
+              <div >
+                <p>属性<br/> <strong>{{ mockDevice.attribute === 0 ? "已激活" : mockDevice.attribute === 1 ? "未激活" : "初始" }}</strong></p>
+              </div>
+              <div style="margin-left:120px">
+                <p>组织 <br/><strong>{{ mockDevice.organization }}</strong></p>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
+              <div >
+                <p>今日消杀次数<br/> <strong>{{ mockDevice.count }}</strong></p>
+              </div>
+              <div style="margin-left:80px">
+                <p>今日消杀时间（秒）<br/><strong>{{ mockDevice.time}}</strong> </p>
+              </div>
+            </div>
+              <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
+              <div >
+                <p>累计消杀次数<br/><strong> {{ mockDevice.countAll }}</strong></p>
+              </div>
+              <div style="margin-left:80px">
+                <p>累计消杀时间（秒） <br/><strong>{{ mockDevice.timeAll}}</strong></p>
+              </div>
+            </div>
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
+              <div >
+                <p>平均消杀次数<br/><strong> {{ mockDevice.averageCount }}</strong></p>
+              </div>
+              <div style="margin-left:80px">
+                <p>平均消杀时间（秒）<br/><strong>{{ mockDevice.averageTime}}</strong> </p>
+              </div>
+            </div>
+            
           </div>
+
+            <!-- 第三个小盒子 -->
+            <div class="detail-box with-border" style="text-align: center">
+              <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
+            <div >
+            <p>下一维护时长寿命<br/><strong> {{ mockDevice.lifespan }}</strong></p>
+            </div>
+            <div style="margin-left:80px">
+            <p>预计维保日期<br/><strong> {{ mockDevice.date }}</strong></p>
+            </div>
+          </div>
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px;">
+            <div >
+            <p>维保人员<br/> <strong> {{ mockDevice.maintenancePerson }}</strong></p>
+            </div>
+            <div style="margin-left:120px">
+            <p>联系电话<br/><strong> {{ mockDevice.maintenancePhone }}</strong></p>
+            </div>
+          </div>
+            
+                </div>
 
           <!-- 按钮 -->
           <div class="detail-buttons " style="text-align: center">
@@ -215,7 +214,6 @@
         </template>
       </el-dialog>
 
-=======
       <el-dialog title="设备信息" :visible.sync="deviceVisible" width="30%" :before-close="closedevice">
         <div>
           qwe
@@ -228,7 +226,6 @@
           <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
         </span>
       </el-dialog>
->>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
       <!-- 搜索条件 -->
       <div class="search-box">
         <el-form :model="searchForm" label-width="100px">
@@ -307,7 +304,6 @@
 
       <!-- 列表 -->
       <div class="notification-list">
-<<<<<<< HEAD
         <el-table
           :data="notificationList"
           height="350"
@@ -317,14 +313,12 @@
             color: 'white',
           }"
         >
-=======
         <el-table :data="notificationList" height="350" style="width: 100%" :header-cell-style="{
           background: '#027DB4',
           color: 'white',
           'text-align': 'center',
 
         }" :cell-style="{ 'text-align': 'center' }">
->>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
           <el-table-column type="selection" width="65"></el-table-column>
           <el-table-column
             prop="device.sn"
@@ -337,7 +331,7 @@
             width="120"
           ></el-table-column>
           <el-table-column prop="device.attribute" label="属性" width="90">
-            <template slot-scope="scope" class="center">
+            <template slot-scope="scope">
               <span v-if="scope.row.device.attribute === 0">已激活</span>
               <span v-else-if="scope.row.device.attribute === 1">未激活</span>
               <span v-else-if="scope.row.device.attribute === 2">初始</span>
@@ -349,7 +343,6 @@
               <span v-else-if="scope.row.device.status === 1">在线</span>
             </template>
           </el-table-column>
-<<<<<<< HEAD
           <el-table-column
             prop="orgnizationname"
             label="组织"
@@ -385,7 +378,7 @@
                 size="small"
                 >详情</el-button
               >
-=======
+            </template>
           <el-table-column prop="orgnizationname" label="组织" width="233"></el-table-column>
           <el-table-column prop="device.cout" label="使用次数" width="100"></el-table-column>
           <el-table-column prop="device.duration" label="使用时长(秒)" width="120"></el-table-column>
@@ -398,7 +391,6 @@
                 <el-button @click="mianrecord(scope.row)" type="text" size="small">维护记录</el-button>
                 <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
               </div>
->>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
             </template>
           </el-table-column>
         </el-table>
@@ -416,7 +408,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import {
   ListAllOrgnization,
   SelectDevice,
@@ -424,11 +415,14 @@ import {
   AddDevice,
 } from "@/utils/api/Mocha_itom/DeviceManage";
 import { useUserStore } from "@/stores/user";
-=======
-import { ListAllOrgnization, SelectDevice, ListDevice, AddDevice } from "@/utils/api/Mocha_itom/DeviceManage"
-import { useUserStore } from "@/stores/user"
+import {
+  ListAllOrgnization,
+  SelectDevice,
+  ListDevice,
+  AddDevice,
+} from "@/utils/api/Mocha_itom/DeviceManage";
+import { useUserStore } from "@/stores/user";
 
->>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
 export default {
   data() {
     return {
@@ -564,21 +558,21 @@ export default {
       isOA: false,
       detailVisible: false,
       selectedDevice: null,
-      number:null,//点击详情时设备的编号
+      number: null, //点击详情时设备的编号
       mockDevice: {
         deviceName: "紫外消杀一体机",
         image: "/src/assets/img/login9.png", // 默认图片路径
         imageDescription: "1号楼 410室设备",
-        deviceNumber:"82473764726437563",
+        deviceNumber: "82473764726437563",
         status: 1,
         attribute: 0, // 默认属性值
         organization: "桂林市人民医院",
         count: 0, // 默认次数
         time: 10327,
-        countAll:1037,//累计消杀次数
-        timeAll:10327,//累计消杀时间
-        averageCount:1037,//平均消杀次数
-        averageTime:10327,//平均消杀时间
+        countAll: 1037, //累计消杀次数
+        timeAll: 10327, //累计消杀时间
+        averageCount: 1037, //平均消杀次数
+        averageTime: 10327, //平均消杀时间
         lifespan: "50000",
         date: "2022-11-11",
         maintenancePerson: "李师傅",
@@ -590,15 +584,15 @@ export default {
     handleDetailClose() {
       this.detailVisible = false;
     },
-    removeDevice(device) {//移除设备按钮
-      console.log("-------------------device:"+device.deviceNumber);
+    removeDevice(device) {
+      //移除设备按钮
+      console.log("-------------------device:" + device.deviceNumber);
       // 弹出确认框
-  this.$confirm(`确认要移除设备 ${device.deviceNumber} 吗？`, '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
-  })
-   
+      this.$confirm(`确认要移除设备 ${device.deviceNumber} 吗？`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      });
     },
     previous() {
       console.log(this.active);
@@ -620,7 +614,7 @@ export default {
       }
     },
     closedevice() {
-      this.deviceVisible = false
+      this.deviceVisible = false;
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -673,13 +667,10 @@ export default {
       this.addsVisible = true;
     },
     handleDetail(row) {
-<<<<<<< HEAD
       this.selectedDevice = row;
       this.detailVisible = true;
-=======
       console.log("click");
-      this.deviceVisible = true
->>>>>>> 01263d9b977dc3ed9376e3e7411227d808953fc0
+      this.deviceVisible = true;
     },
     handlePageChange(currentPage) {
       this.currentPage = currentPage;
@@ -813,7 +804,7 @@ export default {
   .long {
     width: 350px;
   }
- 
+
   .with-border {
     border: 1px solid #ccc;
     padding: 10px; /* 可根据需要调整边框和内部内容的间距 */
@@ -823,8 +814,8 @@ export default {
     width: 180px;
     height: 150px;
   }
-  .detail-box{
-    background-color: rgb(240, 237, 237,0.5);
+  .detail-box {
+    background-color: rgb(240, 237, 237, 0.5);
   }
 }
 </style>
